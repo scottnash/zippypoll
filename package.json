@@ -1,0 +1,29 @@
+{
+  "name": "speedy-poll",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scottnash/speedy-poll.git"
+  },
+  "author": "Scott Nash",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scottnash/speedy-poll/issues"
+  },
+  "homepage": "https://github.com/scottnash/speedy-poll#readme",
+  "dependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "express": "^4.16.3",
+    "node-sass": "^4.9.0",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0"
+  }
+}
