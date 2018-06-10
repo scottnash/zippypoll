@@ -11,6 +11,7 @@ RUN npm install
 
 # move in the rest of the content
 COPY . /app
+
 EXPOSE 8081
 
 CMD ["npm", "run", "start"]
