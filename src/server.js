@@ -2,7 +2,8 @@ const express = require('express');
 const app = express()
 
 app.set('view engine', 'pug');
-app.use('/assets/scripts', express.static('./src/assets/scripts'));
+app.use('/assets/scripts', express.static('./src/dist/scripts'));
+app.use('/assets/css', express.static('./src/dist/css'));
 app.set('views', './src/views');
 
 

@@ -3783,7 +3783,18 @@ eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn th
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nconsole.log('hello');\n\n//# sourceURL=webpack:///./src/js/index.js?");
+eval("\n\nvar _zippypoll = __webpack_require__(/*! ./zippypoll */ \"./src/js/zippypoll.scss\");\n\nvar _zippypoll2 = _interopRequireDefault(_zippypoll);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nconsole.log('hello there!');\n\n//# sourceURL=webpack:///./src/js/index.js?");
+
+/***/ }),
+
+/***/ "./src/js/zippypoll.scss":
+/*!*******************************!*\
+  !*** ./src/js/zippypoll.scss ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/js/zippypoll.scss?");
 
 /***/ }),
 

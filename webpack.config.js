@@ -8,8 +8,8 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 module.exports = (env, argv) => {
  const plugins =  [
    new MiniCssExtractPlugin({
-     filename: "/CSS/[name].css",
-     chunkFilename: "/CSS/manifest.zippypoll.css"
+     filename: "/css/[name].css",
+     chunkFilename: "/css/manifest.zippypoll.css"
    })
  ]
   if(process.env.NODE_ENV === 'production') {
@@ -37,7 +37,7 @@ module.exports = (env, argv) => {
     },
     output: {
         filename: 'scripts/[name].bundle.js',
-        path: path.resolve(__dirname, "./src/assets/"),
+        path: path.resolve(__dirname, "./src/dist/"),
         chunkFilename: '[name].bundle.js'
     },
     module: {
