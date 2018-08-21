@@ -37,7 +37,7 @@ module.exports = (env, argv) => {
     },
     output: {
         filename: 'scripts/[name].bundle.js',
-        path: path.resolve(__dirname, "/assets/"),
+        path: path.resolve(__dirname, "./src/assets/"),
         chunkFilename: '[name].bundle.js'
     },
     module: {
