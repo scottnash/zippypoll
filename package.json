@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "node ./src/server.js"
+    "start": "node ./src/server.js | webpack --watch --mode development"
   },
   "repository": {
     "type": "git",
@@ -17,14 +17,38 @@
   },
   "homepage": "https://github.com/scottnash/speedy-poll#readme",
   "dependencies": {
+    "autoprefixer": "^8.0.0",
+    "axios": "^0.18.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "bootstrap": "^4.0.0",
+    "css-loader": "^0.28.10",
+    "extract-text-webpack-plugin": "4.0.0-beta.0",
     "express": "^4.16.3",
+    "mini-css-extract-plugin": "^0.4.0",
     "node-sass": "^4.9.0",
+    "optimize-css-assets-webpack-plugin": "^4.0.1",
     "pug": "^2.0.3",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-redux": "^5.0.7",
-    "redux": "^4.0.0"
+    "redux": "^4.0.0",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.20.2",
+    "babel-polyfill": "^6.26.0",
+    "install": "^0.10.4",
+    "npm": "^6.0.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.7",
+    "redux": "^3.7.2",
+    "redux-form": "^7.3.0",
+    "redux-promise": "^0.5.3",
+    "redux-thunk": "^2.2.0",
+    "webpack": "^4.4.1",
+    "webpack-cli": "^2.0.12"
   }
 }
