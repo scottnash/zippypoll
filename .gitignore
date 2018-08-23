@@ -63,4 +63,4 @@ typings/
 # docker-compose.yml with password
 docker-compose.yml
 
-/dist
+src/dist

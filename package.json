@@ -5,9 +5,10 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "nodemon ./src/server/server.js --exec babel-node | webpack --watch --mode development",
-    "build": "babel ./src/server -d ./src/dist --presets env",
-    "serve": "node ./src/dist/server.js",
-    "prod": "npm run build && npm run serve"
+    "serve": "node ./src/dist/server.js | webpack --mode production",
+    "rollup": "./node_modules/.bin/rollup -c",
+    "webpack": "webpack --mode production",
+    "prod": "npm run rollup && npm run serve"
   },
   "repository": {
     "type": "git",
@@ -24,11 +25,13 @@
     "axios": "^0.18.0",
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.5",
+    "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "babelrc-rollup": "^3.0.0",
     "bootstrap": "^4.0.0",
     "css-loader": "^0.28.10",
     "express": "^4.16.3",
@@ -48,6 +51,9 @@
     "redux-form": "^7.3.0",
     "redux-promise": "^0.5.3",
     "redux-thunk": "^2.3.0",
+    "rollup": "^0.64.1",
+    "rollup-plugin-babel": "^3.0.7",
+    "rollup-plugin-node-resolve": "^3.3.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.20.2",
     "webpack": "^4.17.1",
