@@ -9,9 +9,10 @@ export default {
     format: 'cjs'
   },
   external: [
+    'express',
+    'path',
     'react',
     'react-dom/server',
-    'express',
     'react-router-dom'
   ],
   plugins: [
@@ -19,7 +20,7 @@ export default {
     babel({
       exclude: 'node_modules/**',
       babelrc: false,
-      presets: [['env', { modules: false }], "react"]
+      presets: [['env', { modules: false }], 'react']
     })
   ]
 };

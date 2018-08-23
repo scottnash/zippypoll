@@ -1,4 +1,5 @@
 import styles from './zippypoll';
+import LogoStyles from './components/logo/ZippyLogo';
 
 import React from "react";
 import ReactDOM from "react-dom";

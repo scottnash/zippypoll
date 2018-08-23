@@ -1,3 +1,20 @@
+@import './sass/config';
+@import "~normalize.css";
+
+a:active, a:focus {
+  outline: 0;
+  border: none;
+  -moz-outline-style: none;
+}
 body {
-  background-color: green;
+
+}
+.layout__header-holder {
+  background-color: rgba(0,0,0,.75);
+}
+header {
+  margin: 0 auto;
+  max-width: 1200px;
+  overflow: auto;
+  padding: 100px 25px;
 }

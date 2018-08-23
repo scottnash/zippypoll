@@ -1,5 +1,3 @@
 RewriteEngine On
 RewriteCond %{SERVER_PORT} 8
-RewriteCond %{REQUEST_URI} !^/assets/.*
-RewriteCond %{REQUEST_URI} !^/assets$
-RewriteRule . http://zippypoll.com:8081/$1 [P,L]
+RewriteRule .?  http://www.zippypoll.com:8081%{REQUEST_URI} [P,L]
