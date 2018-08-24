@@ -2,6 +2,7 @@
 
 .layout__logo {
   background-color: $primaryYellow;
+  border: 3px solid black;
   border-radius: 50%;
   display: inline-block;
   padding: 0;
@@ -33,12 +34,12 @@
   position: relative;
   transform-style: preserve-3d;
   transform-origin: center center;
-  transition: transform 30s;
-  width: 225px;
+  transition: transform 3s ease-in-out;
+  width: 235px;
 }
 
-.card:hover {
-  transform: rotateX(-360deg);
+.entry-animation .card {
+  transform: rotateX(-720deg);
 }
 
 .card__face {
@@ -51,15 +52,13 @@
 }
 
 .card__face--back {
+  top: -4px;
   transform: rotateX(180deg);
   .layout__logo {
     transform: rotate(10deg);
     h1 {
-      -webkit-transform: rotateX(-10deg) rotateY(180deg);
-      -moz-transform: rotateX(-10deg) rotateY(180deg);
-      -o-transform: rotateX(-10deg) rotateY(180deg);
-      -ms-transform: rotate(-10deg) rotateY(180deg);
-      transform: rotateX(-10deg) rotateY(180deg);
+      transform: rotate(-10deg);
+      visibility: hidden;
     }
   }
 }
