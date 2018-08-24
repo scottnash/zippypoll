@@ -1,7 +1,22 @@
 import React from "react";
 
-const About = () => (
-    <h2>This is the About page</h2>
-);
+export default class About extends React.Component {
+  constructor(props){
+    super(props);
+  }
 
-export default About;
+  componentDidMount() {
+    window.setTimeout( ()=> {
+      this.props.turnOnEntryAnimation();
+    }, 250);
+  }
+
+  render() {
+    return (
+      <div className="zippypoll__maxwidth-content-holder">
+        <h1>About ZippyPoll</h1>
+      </div>
+    );
+  }
+
+}

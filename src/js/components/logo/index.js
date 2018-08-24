@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { helloWorld } from './test';
+
 if (process.env.BROWSER) {
   require('./ZippyLogo.scss');
 }

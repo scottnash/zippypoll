@@ -1,0 +1,50 @@
+@mixin breakpoint($min: 0, $max: 0) {
+  $type: type-of($min);
+
+  @if $type == string {
+      $class: $min;
+
+      @if $class == mobileWidth { //576px
+        @media (max-width: $mobileWidth) { @content; }
+      }
+
+      @else if $class == tablet { //1024px
+        @media (max-width: $tabletWidth) { @content; }
+      }
+
+      @else if $class == sm {
+        @media (min-width: 576px) { @content; }
+      }
+
+      @else if $class == md {
+        @media (min-width: 768px) { @content; }
+      }
+
+      @else if $class == lg {
+        @media (min-width:  $tabletWidth) { @content; }
+      }
+
+      @else if $class == xl {
+        @media (min-width: 1280px) { @content; }
+      }
+
+      @else {
+        @warn "Breakpoint mixin supports: mobileWidth, tablet, sm, md, lg, xl";
+      }
+  }
+  @else if $type == number {
+      $query: "all" !default;
+        @if $min != 0 and $max != 0 {
+          $query: "(min-width: #{$min}) and (max-width: #{$max})";
+        }
+        @else if $min != 0 and $max == 0 {
+          $query: "(min-width: #{$min})";
+        }
+        @else if $min == 0 and $max != 0 {
+          $query: "(max-width: #{$max})";
+        }
+        @media #{$query} {
+          @content;
+        }
+  }
+}

@@ -1,7 +1,22 @@
 import React from "react";
 
-const Home = () => (
-    <h2>This is the Home page. What what!</h2>
-);
+export default class Home extends React.Component {
+  constructor(props){
+    super(props);
+  }
 
-export default Home;
+  componentDidMount() {
+    window.setTimeout( ()=> {
+      this.props.turnOnEntryAnimation();
+    }, 250);
+  }
+
+  render() {
+    return (
+      <div className="zippypoll__maxwidth-content-holder">
+        <h1>ZippyPoll</h1>
+      </div>
+    );
+  }
+
+}

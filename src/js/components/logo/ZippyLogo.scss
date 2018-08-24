@@ -26,6 +26,7 @@
 }
 
 .scene {
+  display: inline-block;
   margin-left: 25px;
   perspective: 1000px;
 }
@@ -36,12 +37,12 @@
   position: relative;
   transform-style: preserve-3d;
   transform-origin: center center;
-  transition: transform 3s ease-in-out;
+  transition: transform 1s ease-out;
   width: 235px;
 }
 
 .entry-animation .card {
-  transform: rotateY(-720deg);
+  transform: rotateY(-360deg);
 }
 
 .card__face {

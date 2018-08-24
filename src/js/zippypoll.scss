@@ -3,7 +3,6 @@
 
 a:active, a:focus {
   outline: 0;
-  border: none;
   -moz-outline-style: none;
 }
 body {
@@ -14,7 +13,13 @@ body {
 }
 header {
   margin: 0 auto;
-  max-width: 1200px;
+  max-width: $maxContentWidth;
   overflow: hidden;
   padding: 35px 25px 25px 0px;
+}
+
+.zippypoll__maxwidth-content-holder {
+  margin: 0 auto;
+  max-width: $maxContentWidth;
+  padding: 25px;
 }
