@@ -13,7 +13,15 @@ export default class Layout extends React.Component {
   }
 
     componentDidMount() {
-        this.setState( { entryAnimation: 'entry-animation' } );
+      window.setTimeout( ()=> {
+        this.turnOnEntryAnimation(true);
+      }, 2000);
+    }
+
+    turnOnEntryAnimation = ( turnItOn ) => {
+      const animationClass = turnItOn ? 'entry-animation' : null;
+      this.setState( { entryAnimation: animationClass } );
+      
     }
 
     render() {

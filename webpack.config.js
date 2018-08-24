@@ -10,6 +10,12 @@ module.exports = (env, argv) => {
    new MiniCssExtractPlugin({
      filename: "/css/[name].css",
      chunkFilename: "/css/manifest.zippypoll.css"
+   }),
+   new webpack.DefinePlugin({
+     "process.env": {
+       NODE_ENV: JSON.stringify("development"),
+       BROWSER: JSON.stringify(true)
+     }
    })
  ]
   if(process.env.NODE_ENV === 'production') {
@@ -27,7 +33,8 @@ module.exports = (env, argv) => {
     },
     resolve: {
       alias: {
-        Sass: path.resolve(__dirname, './sass/')
+        Sass: path.resolve(__dirname, './src/sass/'),
+        Components: path.resolve(__dirname, './src/js/components/')
       },
       extensions: ['*', '.scss', '.css', '.js', '.jsx', '.json']
     },

@@ -1,6 +1,7 @@
 // rollup.config.js
 import resolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
+import sass from 'rollup-plugin-sass';
 
 export default {
   input: './src/server/server.js',
@@ -16,11 +17,12 @@ export default {
     'react-router-dom'
   ],
   plugins: [
-    resolve(),
+    resolve(extensions: ['*', '.scss', '.css', '.js', '.jsx', '.json']),
     babel({
       exclude: 'node_modules/**',
       babelrc: false,
       presets: [['env', { modules: false }], 'react']
-    })
+    }),
+    sass()
   ]
 };
