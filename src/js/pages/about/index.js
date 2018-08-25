@@ -5,10 +5,8 @@ export default class About extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-    window.setTimeout( ()=> {
-      this.props.turnOnEntryAnimation();
-    }, 250);
+  componentWillUnmount() {
+    this.props.turnOnEntryAnimation();
   }
 
   render() {
