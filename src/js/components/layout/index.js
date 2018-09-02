@@ -2,6 +2,7 @@ import React from "react";
 import { Link, Switch, Route } from "react-router-dom";
 import Home from "../../pages/home";
 import About from "../../pages/about";
+import Poll from "../../pages/poll";
 import Logo from "../logo";
 import HeaderLinks from "../headerlinks";
 
@@ -32,6 +33,7 @@ export default class Layout extends React.Component {
           </div>
           <div className="layout__body-holder">
             <Switch>
+                <Route path="/poll/:id" render= { (props) => <Poll {...props} turnOnEntryAnimation = { this.turnOnEntryAnimation }/> } />
                 <Route path="/about" exact render= { (props) => <About {...props} turnOnEntryAnimation = { this.turnOnEntryAnimation }/> } />
                 <Route render= { (props) => <Home {...props} turnOnEntryAnimation = { this.turnOnEntryAnimation }/> } />
             </Switch>
