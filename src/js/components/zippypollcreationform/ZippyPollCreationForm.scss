@@ -1,9 +1,36 @@
 @import '../../sass/config';
 
-.zippypoll__form-step {
-  display: none;
-}
+.zippypoll__creation-form {
+  .zippypoll__form-step {
+    display: none;
+    position: relative;
+    text-align: left;
+  }
 
-.zippypoll__active-form-step {
-  display: block;
+  .zippypoll__active-form-step {
+    display: block;
+  }
+
+  label {
+    display: block;
+    font-weight: bold;
+    margin: 40px 0 15px 0;
+  }
+
+  input[type='text'] {
+    border-radius: 6px;
+    margin-bottom: 10px;
+    width: calc( 100% - 64px);
+  }
+  button {
+    border: 1px solid;
+    border-bottom: 0;
+    border-right: 0;
+    border-top: 0;
+    border-radius: 0 6px 6px 0;
+    height: 38px;
+    position: absolute;
+    right: 2.95px;
+    top: 34.5px;
+  }
 }

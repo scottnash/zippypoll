@@ -1,6 +1,10 @@
 import React from "react";
 import ZippyPollCreationForm from "../../components/zippypollcreationform";
 
+if (process.env.BROWSER) {
+  require('./home.scss');
+}
+
 export default class Home extends React.Component {
   constructor(props){
     super(props);
@@ -12,9 +16,12 @@ export default class Home extends React.Component {
 
   render() {
     return (
-      <div className="zippypoll__maxwidth-content-holder">
-        <h1>Gather a group's opinion on anything</h1>
-        <ZippyPollCreationForm />
+      <div className="zippypoll__maxwidth-content-holder zippypoll__home">
+        <div className="zippypoll__home__entry-block">
+          <h1>Find Out What People Really Think</h1>
+          <h2>Create your poll in  a zippy!</h2>
+          <ZippyPollCreationForm />
+        </div>
       </div>
     );
   }

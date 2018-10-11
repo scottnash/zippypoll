@@ -1,6 +1,6 @@
 import React from "react";
 
-const inputText = ( { input, label, placeholder, type, index, handleStepCompletion, activeFormStep, meta: props } ) => {
+const inputText = ( { input, label, placeholder, type, index, buttonLabel, handleStepCompletion, activeFormStep, meta: props } ) => {
    const textInput = React.createRef();
      setTimeout( ()=> {
        if( textInput.current && index === activeFormStep ) {
@@ -11,6 +11,7 @@ const inputText = ( { input, label, placeholder, type, index, handleStepCompleti
       <div>
         <label>{ label }</label>
           <input
+            className = { ((props.touched || props.submitting) && props.error) ? 'zippypoll__field-inerror': '' }
             autoFocus = { activeFormStep === index }
             { ...input}
             placeholder={ placeholder }
@@ -29,7 +30,7 @@ const inputText = ( { input, label, placeholder, type, index, handleStepCompleti
              type="button"
              onClick= { () => handleStepCompletion( index + 1 ) }
              disabled = { props.error }
-          >Go</button>
+          >{ buttonLabel }</button>
           <div className="zippypoll__error-message">{ ((props.touched || props.submitting) && props.error) ? <span>{ props.error }</span> : '' }</div>
       </div>
     );

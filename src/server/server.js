@@ -35,7 +35,8 @@ const loadHomePage = (req,res)=> {
 }
 
 app.use(express.json());
-app.post('/api/createPoll', db.createPoll );
+app.post( '/api/createPoll', db.createPoll );
+app.post( '/api/getPoll', db.getPoll );
 app.get('/*', loadHomePage );
 
 app.listen(8081, function () {

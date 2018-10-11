@@ -6,7 +6,9 @@ import { withRouter } from 'react-router-dom'
 import formFields from '../form-fields';
 import formFieldValidators from '../form-field-validators';
 import axios from 'axios';
+import * as cookies from '../../helpers/cookies.js';
 
+console.log(cookies);
 if (process.env.BROWSER) {
   require('./ZippyPollCreationForm.scss');
 }
@@ -24,9 +26,10 @@ class ZippyPollCreationForm extends React.Component {
     return [
       <Field
         activeFormStep = { this.state.activeFormStep }
+        buttonLabel = "Go"
         component = { formFields.inputText }
         index = { 0 }
-        label = "What's your qestion?"
+        label = "First, enter your qestion"
         name="pollquestion"
         placeholder = "Poll question"
         handleStepCompletion = { this.handleStepCompletion }
@@ -35,9 +38,10 @@ class ZippyPollCreationForm extends React.Component {
       />,
       <Field
         activeFormStep = { this.state.activeFormStep }
+        buttonLabel = "Create Poll"
         component = { formFields.inputText }
         index = { 1 }
-        label = { "Enter your initials/nickname" }
+        label = { "Then, enter your initials or a nickname" }
         name="nickname"
         placeholder="Nickname"
         handleStepCompletion = { this.handleStepCompletion }
@@ -51,7 +55,7 @@ class ZippyPollCreationForm extends React.Component {
   render() {
     this.formSteps = this.getFormSteps();
     return (
-      <form>
+      <form className="zippypoll__creation-form">
         { this.renderFormSteps () }
       </form>
     );
@@ -90,6 +94,7 @@ class ZippyPollCreationForm extends React.Component {
       }
     }).then( (response) => {
       if(response.data.status === "success") {
+        cookies.setCookie( response.data.urlhash, this.props.getZippyPollCreationFormValues.nickname );
         this.props.history.push(`/poll/${ response.data.urlhash }`);
       }
     });

@@ -5,8 +5,12 @@ a:active, a:focus {
   outline: 0;
   -moz-outline-style: none;
 }
+html {
+  height: 100%;
+}
 body {
-
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100%;
 }
 .layout__header-holder {
 
@@ -14,8 +18,9 @@ body {
 header {
   margin: 0 auto;
   max-width: $maxContentWidth;
-  overflow: hidden;
+  overflow: visible;
   padding: 35px 25px 25px 0px;
+  text-align: center;
 }
 
 .zippypoll__maxwidth-content-holder {
@@ -33,4 +38,17 @@ header {
   &.zippypoll__fadeout {
     opacity: 0;
   }
+}
+
+.zippypoll__error-message {
+  color: $error;
+}
+
+input[type='text'] {
+  border: 1px solid $borderColor;
+  padding: 10px 50px 10px 10px;
+}
+
+input[type='text'].zippypoll__field-inerror {
+  border: 1px solid $error;
 }
