@@ -1,9 +1,6 @@
 import React from "react";
-import { connect } from 'react-redux';
-import redux from '../../redux';
-import { Field, reduxForm, formValueSelector, change } from 'redux-form';
 import { withRouter } from 'react-router-dom'
-import formFields from '../form-fields';
+import FormFields from '../form-fields';
 import formFieldValidators from '../form-field-validators';
 import axios from 'axios';
 import * as cookies from '../../helpers/cookies.js';
@@ -24,10 +21,11 @@ class ZippyPollCreationForm extends React.Component {
 
   getFormSteps = () => {
     return [
+      <FormFields.inputText
       <Field
         activeFormStep = { this.state.activeFormStep }
         buttonLabel = "Go"
-        component = { formFields.inputText }
+        component = { FormFields.inputText }
         index = { 0 }
         label = "First, enter your qestion"
         name="pollquestion"
@@ -39,7 +37,7 @@ class ZippyPollCreationForm extends React.Component {
       <Field
         activeFormStep = { this.state.activeFormStep }
         buttonLabel = "Create Poll"
-        component = { formFields.inputText }
+        component = { FormFields.inputText }
         index = { 1 }
         label = { "Then, enter your initials or a nickname" }
         name="nickname"
@@ -101,21 +99,5 @@ class ZippyPollCreationForm extends React.Component {
   }
 }
 
-ZippyPollCreationForm = reduxForm({
-  form: 'ZippyPollCreationForm'
-})(ZippyPollCreationForm);
 
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-
-    }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    getZippyPollCreationFormValues: redux.selectors.getZippyPollCreationFormValues(state),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ZippyPollCreationForm));
+export default withRouter( ZippyPollCreationForm );
