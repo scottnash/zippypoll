@@ -1,7 +1,7 @@
 @import './sass/config';
 @import "~normalize.css";
 
-a:active, a:focus {
+a:active, a:focus, input, input:focus {
   outline: 0;
   -moz-outline-style: none;
 }
@@ -49,6 +49,8 @@ input[type='text'] {
   padding: 10px 50px 10px 10px;
 }
 
-input[type='text'].zippypoll__field-inerror {
-  border: 1px solid $error;
+.zippypoll__field-inerror {
+  input[type='text'] {
+      border: 1px solid $error;
+  }
 }

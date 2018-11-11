@@ -1,11 +1,10 @@
 import React from "react";
 import { withRouter } from 'react-router-dom'
-import FormFields from '../form-fields';
+import { InputText } from '../form-fields';
 import formFieldValidators from '../form-field-validators';
 import axios from 'axios';
 import * as cookies from '../../helpers/cookies.js';
 
-console.log(cookies);
 if (process.env.BROWSER) {
   require('./ZippyPollCreationForm.scss');
 }
@@ -21,11 +20,9 @@ class ZippyPollCreationForm extends React.Component {
 
   getFormSteps = () => {
     return [
-      <FormFields.inputText
-      <Field
+      <InputText
         activeFormStep = { this.state.activeFormStep }
         buttonLabel = "Go"
-        component = { FormFields.inputText }
         index = { 0 }
         label = "First, enter your qestion"
         name="pollquestion"
@@ -34,10 +31,9 @@ class ZippyPollCreationForm extends React.Component {
         type="text"
         validate = { formFieldValidators.requiredValidator }
       />,
-      <Field
+      <InputText
         activeFormStep = { this.state.activeFormStep }
         buttonLabel = "Create Poll"
-        component = { FormFields.inputText }
         index = { 1 }
         label = { "Then, enter your initials or a nickname" }
         name="nickname"

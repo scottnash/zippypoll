@@ -1,39 +1,62 @@
-import React from "react";
+import React, { Component } from "react";
 
-const inputText = ( { input, label, placeholder, type, index, buttonLabel, handleStepCompletion, activeFormStep, meta: props } ) => {
-   const textInput = React.createRef();
-     setTimeout( ()=> {
-       if( textInput.current && index === activeFormStep ) {
-         textInput.current.focus();
+export class InputText extends Component {
+  constructor( props ){
+    super( props );
+    this.state = {
+      inputValue: '',
+      inError: false,
+      touched: false
+    }
+  }
+
+   validateFieldValue = ( fieldValue ) => {
+     const error = this.props.validate( fieldValue );
+     if( error  ) {
+      this.setState( { inError: true, errorMessage: error } );
+    } else {
+      this.setState( { inError: false, errorMessage: '' } );
+    }
+   }
+
+   handleChange = ( el ) => {
+     const fieldValue = el.target.value;
+     this.setState( { inputValue: fieldValue }, () => {
+       if( this.state.touched ) {
+         this.validateFieldValue( fieldValue );
        }
-     }, 0);
-    return (
-      <div>
-        <label>{ label }</label>
-          <input
-            className = { ((props.touched || props.submitting) && props.error) ? 'zippypoll__field-inerror': '' }
-            autoFocus = { activeFormStep === index }
-            { ...input}
-            placeholder={ placeholder }
-            type={ type }
-            onKeyUp = {
-              (e)=> {
-                if (e.keyCode === 13) {
-                  e.preventDefault();
-                  handleStepCompletion( index + 1 );
-                }
-              }
-            }
-            ref = { textInput }
-          />
-          <button
-             type="button"
-             onClick= { () => handleStepCompletion( index + 1 ) }
-             disabled = { props.error }
-          >{ buttonLabel }</button>
-          <div className="zippypoll__error-message">{ ((props.touched || props.submitting) && props.error) ? <span>{ props.error }</span> : '' }</div>
-      </div>
-    );
-}
+     } );
+   }
 
-export default { inputText };
+   render() {
+     return (
+       <div className = { this.state.inError ? 'zippypoll__field-inerror': '' }>
+         <label>{ this.props.label }</label>
+           <input
+             onBlur = { el => this.validateFieldValue( el.target.value ) }
+             onFocus = { ()=> { this.setState( { touched: true } ) } }
+             onChange={ this.handleChange }
+             className = { ((this.props.touched || this.props.submitting) && this.props.error) ? 'zippypoll__field-inerror': '' }
+             autoFocus = { this.props.activeFormStep === this.props.index }
+             value = { this.state.inputValue }
+             placeholder={ this.props.placeholder }
+             type={ this.props.type }
+             onKeyUp = {
+               (e)=> {
+                 if (e.keyCode === 13) {
+                   e.preventDefault();
+                   this.props.handleStepCompletion( this.props.index + 1 );
+                 }
+               }
+             }
+           />
+           <button
+              type="button"
+              onClick= { () => this.props.handleStepCompletion( this.prop.index + 1 ) }
+              disabled={ this.state.inError || !this.state.inputValue.length }
+           >{ this.props.buttonLabel }</button>
+           <div className="zippypoll__error-message">{ this.state.inError ? <span>{ this.state.errorMessage }</span> : '' }</div>
+       </div>
+     );
+   }
+}

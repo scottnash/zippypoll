@@ -1,11 +1,6 @@
 import express from "express";
 import path from "path";
 import React from "react";
-import { createStore, applyMiddleware, compose } from 'redux';
-import { Provider } from 'react-redux';
-import Redux from '../js/redux/';
-import ReduxThunk from 'redux-thunk';
-import ReduxPromise from 'redux-promise';
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom";
 import Layout from "../js/components/layout";
@@ -18,14 +13,11 @@ app.use('/assets/css', express.static('./src/dist/css'));
 
 
 const loadHomePage = (req,res)=> {
-    const store = createStore( Redux.reducer, applyMiddleware( ReduxPromise, ReduxThunk ) );
     const context = { };
     const jsx = (
-      <Provider store={ store }>
         <StaticRouter context={ context } location={ req.url }>
             <Layout />
         </StaticRouter>
-    </Provider>
     );
     const title = "Zippy Poll";
     const reactDom = renderToString( jsx );
