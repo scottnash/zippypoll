@@ -10,7 +10,8 @@ export default class Poll extends React.Component {
 
     this.state = {
       poll: null,
-      nickname: null
+      nickname: null,
+      hideJoinPoll: false
     }
 
     this.getPoll();
@@ -21,7 +22,7 @@ export default class Poll extends React.Component {
   }
 
   render() {
-    const { poll, nickname } = this.state;
+    const { poll, nickname, hideJoinPoll } = this.state;
 
     if( !poll ) {
       return null;
@@ -29,6 +30,12 @@ export default class Poll extends React.Component {
 
     return (
       <div className="zippypoll__maxwidth-content-holder">
+        <JoinPoll
+          nickname = { nickname }
+          hideJoinPoll = { hideJoinPoll }
+          poll = { poll }
+          handleCloserClick = { this.handleCloserClick }
+        />
         <ZippyPollForm
           datecreated = { new Date(poll.datecreated) }
           creatornickname = { poll.nickname }
@@ -50,7 +57,19 @@ export default class Poll extends React.Component {
     });
   }
 
+  handleCloserClick = ( event, doItAnyway )=> {
+    event.preventDefault();
+     if(event.target === event.currentTarget || doItAnyway) {
+       this.setState( { hideJoinPoll: true } );
+     }
+  }
+
+  showJoinPoll = () => {
+    this.setState( { hideJoinPoll: false } );
+  }
+
   getNickname = (urlHash) => {
     return cookies.getCookie(urlHash);
   }
+
 }

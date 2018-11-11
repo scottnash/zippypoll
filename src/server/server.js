@@ -3,7 +3,7 @@ import path from "path";
 import React from "react";
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom";
-import Layout from "../js/components/layout";
+import Layout from "../js/layout";
 import { htmlTemplate } from "./template";
 import * as db from './queries';
 const app = express()

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default ( { question, creatornickname, datecreated, nickname } ) => {
+const ZippyPollForm =  ( { question, creatornickname, datecreated, nickname } ) => {
   return (
     <div className="zippypoll__form">
       <h1>{ question }</h1>
@@ -14,3 +14,5 @@ export default ( { question, creatornickname, datecreated, nickname } ) => {
     </div>
   )
 }
+
+export default ZippyPollForm;

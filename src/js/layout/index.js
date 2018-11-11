@@ -1,10 +1,10 @@
 import React from "react";
 import { Link, Switch, Route } from "react-router-dom";
-import Home from "../../pages/home";
-import About from "../../pages/about";
-import Poll from "../../pages/poll";
-import Logo from "../logo";
-import HeaderLinks from "../headerlinks";
+import Home from "../pages/home";
+import About from "../pages/about";
+import Poll from "../pages/poll";
+import Logo from "../components/logo";
+import HeaderLinks from "../components/headerlinks";
 
 export default class Layout extends React.Component {
   constructor(props){

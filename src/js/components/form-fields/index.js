@@ -28,11 +28,20 @@ export class InputText extends Component {
      } );
    }
 
+   handleSubmit = ( el ) => {
+     if( !this.props.validate( this.state.inputValue ) ) {
+       this.props.handleStepCompletion(  this.props.name, this.state.inputValue, this.props.index + 1 )
+     } else {
+       this.validateFieldValue( this.state.inputValue );
+     }
+   }
+
    render() {
      return (
        <div className = { this.state.inError ? 'zippypoll__field-inerror': '' }>
          <label>{ this.props.label }</label>
            <input
+            name={ this.props.name }
              onBlur = { el => this.validateFieldValue( el.target.value ) }
              onFocus = { ()=> { this.setState( { touched: true } ) } }
              onChange={ this.handleChange }
@@ -45,15 +54,14 @@ export class InputText extends Component {
                (e)=> {
                  if (e.keyCode === 13) {
                    e.preventDefault();
-                   this.props.handleStepCompletion( this.props.index + 1 );
+                   this.handleSubmit( e );
                  }
                }
              }
            />
            <button
               type="button"
-              onClick= { () => this.props.handleStepCompletion( this.prop.index + 1 ) }
-              disabled={ this.state.inError || !this.state.inputValue.length }
+              onClick= { this.handleSubmit }
            >{ this.props.buttonLabel }</button>
            <div className="zippypoll__error-message">{ this.state.inError ? <span>{ this.state.errorMessage }</span> : '' }</div>
        </div>

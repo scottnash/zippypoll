@@ -69,26 +69,29 @@ class ZippyPollCreationForm extends React.Component {
     return index === this.state.activeFormStep ? 'zippypoll__active-form-step' : '';
   }
 
-  handleStepCompletion = ( index ) => {
-    if( index < this.formSteps.length ) {
-      this.setState( { activeFormStep: index } );
-    } else {
-      this.setState( { activeFormStep: index }, this.createPoll );
-    }
+  handleStepCompletion = ( formfield, formfieldValue, index ) => {
+      this.setState( {
+          zippyPollForm: {
+            ...this.state.zippyPollForm,
+            [formfield]: formfieldValue
+          },
+          activeFormStep: index
+        }, ()=> {
+        if( index == this.formSteps.length ) {
+          this.createPoll();
+        }
+      } );
   }
 
-  setActiveFormStep = ( index ) => {
-
-  }
 
   createPoll = () => {
-    axios.post('/api/createpoll', this.props.getZippyPollCreationFormValues, {
+    axios.post('/api/createpoll', this.state.zippyPollForm, {
       headers: {
           'Content-Type': 'application/json'
       }
     }).then( (response) => {
       if(response.data.status === "success") {
-        cookies.setCookie( response.data.urlhash, this.props.getZippyPollCreationFormValues.nickname );
+        cookies.setCookie( response.data.urlhash, this.state.zippyPollForm.nickname );
         this.props.history.push(`/poll/${ response.data.urlhash }`);
       }
     });
