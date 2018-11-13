@@ -1,7 +1,7 @@
 import React from "react";
 import { InputText } from '../form-fields';
 import formFieldValidators from '../form-field-validators';
-import Modal from '../Modal';
+import Modal from '../modal';
 
 const JoinPoll = ( { nickname, hideJoinPoll, poll,  handleCloserClick, handleStepCompletion, inError, errorMessage } ) => {
   if( nickname || hideJoinPoll ){
