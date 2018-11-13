@@ -11,7 +11,9 @@ export default class Poll extends React.Component {
     this.state = {
       poll: null,
       nickname: null,
-      hideJoinPoll: false
+      hideJoinPoll: false,
+      joinInError: false,
+      joinErrorMessage: ''
     }
 
     this.getPoll();
@@ -35,6 +37,9 @@ export default class Poll extends React.Component {
           hideJoinPoll = { hideJoinPoll }
           poll = { poll }
           handleCloserClick = { this.handleCloserClick }
+          handleStepCompletion = { this.submitJoinPoll }
+          inError = { this.state.joinInError }
+          errorMessage = { this.state.joinErrorMessage }
         />
         <ZippyPollForm
           datecreated = { new Date(poll.datecreated) }
@@ -54,6 +59,22 @@ export default class Poll extends React.Component {
       }
     }).then( (response) => {
       this.setState( { poll: response.data.poll, nickname: this.getNickname(response.data.poll.urlhash) }, ()=> { console.log( this.state.poll) } );
+    });
+  }
+
+  submitJoinPoll = ( fieldName, fieldValue, index ) => {
+    axios.post('/api/joinpoll', { nickname: fieldValue, pollid: this.state.poll.pollid }, {
+      headers: {
+          'Content-Type': 'application/json'
+      }
+    }).then( (response) => {
+      if(response.data.status === "success") {
+        this.setState ( { nickname: fieldValue, hideJoinPoll: true }, ()=> {
+          cookies.setCookie( this.state.poll.urlhash, fieldValue );
+        })
+      } else if( response.data.status === "error" ) {
+        this.setState( { joinInError: true, joinErrorMessage: response.data.message })
+      }
     });
   }
 

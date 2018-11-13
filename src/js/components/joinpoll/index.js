@@ -3,7 +3,7 @@ import { InputText } from '../form-fields';
 import formFieldValidators from '../form-field-validators';
 import Modal from '../Modal';
 
-const JoinPoll = ( { nickname, hideJoinPoll, poll,  handleCloserClick } ) => {
+const JoinPoll = ( { nickname, hideJoinPoll, poll,  handleCloserClick, handleStepCompletion, inError, errorMessage } ) => {
   if( nickname || hideJoinPoll ){
     return null;
   } else {
@@ -12,7 +12,7 @@ const JoinPoll = ( { nickname, hideJoinPoll, poll,  handleCloserClick } ) => {
         handleCloserClick = { handleCloserClick }
       >
         <div className="zippypoll__entry-block">
-          <form className="zippypoll__add-user-form zippypoll__form-step zippypoll__active-form-step">
+          <div className="zippypoll__add-user-form zippypoll__form-step zippypoll__active-form-step">
             <InputText
               activeFormStep = { 0 }
               buttonLabel = "Go"
@@ -23,16 +23,16 @@ const JoinPoll = ( { nickname, hideJoinPoll, poll,  handleCloserClick } ) => {
               handleStepCompletion = { handleStepCompletion }
               type="text"
               validate = { formFieldValidators.requiredValidator }
+              inError = { inError }
+              errorMessage = { errorMessage }
             />
-          </form>
+          </div>
         </div>
       </Modal>
     )
   }
 
-  const handleStepCompletion = () => {
-    console.log( 'complete');
-  }
+
 }
 
 export default JoinPoll;

@@ -38,7 +38,7 @@ export class InputText extends Component {
 
    render() {
      return (
-       <div className = { this.state.inError ? 'zippypoll__field-inerror': '' }>
+       <div className = { this.state.inError || this.props.inError ? 'zippypoll__field-inerror': '' }>
          <label>{ this.props.label }</label>
            <input
             name={ this.props.name }
@@ -63,7 +63,7 @@ export class InputText extends Component {
               type="button"
               onClick= { this.handleSubmit }
            >{ this.props.buttonLabel }</button>
-           <div className="zippypoll__error-message">{ this.state.inError ? <span>{ this.state.errorMessage }</span> : '' }</div>
+           <div className="zippypoll__error-message">{ this.state.inError || this.props.inError ? <span>{ this.state.errorMessage || this.props.errorMessage }</span> : '' }</div>
        </div>
      );
    }

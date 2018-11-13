@@ -5,6 +5,9 @@ a:active, a:focus, input, input:focus {
   outline: 0;
   -moz-outline-style: none;
 }
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset;
+}
 html {
   height: 100%;
 }
