@@ -1,0 +1,16 @@
+@import '../../sass/config';
+
+.zippypoll__form-holder {
+    text-align: center;
+}
+
+.zippypoll__form-footer {
+  font-size: .75rem;
+  overflow: auo;
+  div:first-child {
+    float: left;
+  }
+  div:last-child {
+    float: right;
+  }
+}

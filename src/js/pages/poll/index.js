@@ -4,6 +4,11 @@ import ZippyPollForm from '../../components/zippypoll-form';
 import JoinPoll from '../../components/joinpoll';
 import * as cookies from '../../helpers/cookies.js';
 
+if (process.env.BROWSER) {
+  require('./poll.scss');
+}
+
+
 export default class Poll extends React.Component {
   constructor(props){
     super(props);
@@ -41,12 +46,14 @@ export default class Poll extends React.Component {
           inError = { this.state.joinInError }
           errorMessage = { this.state.joinErrorMessage }
         />
-        <ZippyPollForm
-          datecreated = { new Date(poll.datecreated) }
-          creatornickname = { poll.nickname }
-          question = { poll.pollquestion }
-          nickname = { nickname }
-        />
+        <div className="zippypoll__form-holder">
+          <ZippyPollForm
+            datecreated = { new Date(poll.datecreated) }
+            creatornickname = { poll.nickname }
+            question = { poll.pollquestion }
+            nickname = { nickname }
+          />
+        </div>
       </div>
     );
   }
