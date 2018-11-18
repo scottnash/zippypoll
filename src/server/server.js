@@ -30,6 +30,7 @@ app.use(express.json());
 app.post( '/api/createPoll', db.createPoll );
 app.post( '/api/getPoll', db.getPoll );
 app.post( '/api/joinPoll', db.joinPoll );
+app.post( '/api/addOption', db.addOption );
 app.get('/*', loadHomePage );
 
 app.listen(8081, function () {

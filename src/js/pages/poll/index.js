@@ -2,6 +2,7 @@ import React from "react";
 import axios from 'axios';
 import ZippyPollForm from '../../components/zippypoll-form';
 import JoinPoll from '../../components/joinpoll';
+import AddPollOption from '../../components/add-poll-option';
 import * as cookies from '../../helpers/cookies.js';
 
 if (process.env.BROWSER) {
@@ -18,7 +19,10 @@ export default class Poll extends React.Component {
       nickname: null,
       hideJoinPoll: false,
       joinInError: false,
-      joinErrorMessage: ''
+      joinErrorMessage: '',
+      hideAddPollOption: true,
+      addPollOptionInError: false,
+      addPollOptionErrorMessage: ''
     }
 
     this.getPoll();
@@ -46,12 +50,21 @@ export default class Poll extends React.Component {
           inError = { this.state.joinInError }
           errorMessage = { this.state.joinErrorMessage }
         />
+        <AddPollOption
+          hideAddPollOption = { this.state.hideAddPollOption }
+          handleCloserClick = { this.handleCloserClick }
+          handleStepCompletion = { this.submitAddPollOption }
+          inError = { this.state.joinInError }
+          errorMessage = { this.state.joinErrorMessage }
+        />
         <div className="zippypoll__form-holder">
           <ZippyPollForm
             datecreated = { new Date(poll.datecreated) }
             creatornickname = { poll.nickname }
             question = { poll.pollquestion }
             nickname = { nickname }
+            addPollOption = { this.addPollOption }
+            showAddPollOption = { this.showAddPollOption }
           />
         </div>
       </div>
@@ -85,10 +98,24 @@ export default class Poll extends React.Component {
     });
   }
 
+  submitAddPollOption = ( fieldName, fieldValue ) => {
+    axios.post('/api/addoption', { nickname: this.state.nickname, pollid: this.state.poll.pollid, option: fieldValue }, {
+      headers: {
+          'Content-Type': 'application/json'
+      }
+    }).then( (response) => {
+      if(response.data.status === "success") {
+        this.setState( { hideAddPollOption: true } );
+      } else if( response.data.status === "error" ) {
+        this.setState( { joinInError: true, joinErrorMessage: response.data.message })
+      }
+    });
+  }
+
   handleCloserClick = ( event, doItAnyway )=> {
     event.preventDefault();
      if(event.target === event.currentTarget || doItAnyway) {
-       this.setState( { hideJoinPoll: true } );
+       this.setState( { hideJoinPoll: true, hideAddPollOption: true } );
      }
   }
 
@@ -96,8 +123,11 @@ export default class Poll extends React.Component {
     this.setState( { hideJoinPoll: false } );
   }
 
+  showAddPollOption = () => {
+    this.setState( { hideAddPollOption: false } );
+  }
+
   getNickname = (urlHash) => {
     return cookies.getCookie(urlHash);
   }
-
 }
