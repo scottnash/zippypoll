@@ -6,11 +6,26 @@
 
 .zippypoll__form-footer {
   font-size: .75rem;
-  overflow: auo;
-  div:first-child {
+  overflow: auto;
+  text-align: left;
+  div {
     float: left;
+    margin-top: 10px;
+  }
+  div:first-child {
+    width: 100%;
   }
   div:last-child {
     float: right;
+  }
+}
+
+.zippypoll__options-holder {
+  list-style-type: none;
+  margin: 50px 0;
+  padding: 0;
+  text-align: left;
+  li {
+    margin: 20px 0 0 0;
   }
 }

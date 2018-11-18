@@ -22,7 +22,8 @@ export default class Poll extends React.Component {
       joinErrorMessage: '',
       hideAddPollOption: true,
       addPollOptionInError: false,
-      addPollOptionErrorMessage: ''
+      addPollOptionErrorMessage: '',
+      pollOptions: []
     }
 
     this.getPoll();
@@ -33,7 +34,7 @@ export default class Poll extends React.Component {
   }
 
   render() {
-    const { poll, nickname, hideJoinPoll } = this.state;
+    const { poll, nickname, hideJoinPoll, pollOptions, joinInError, joinErrorMessage, hideAddPollOption } = this.state;
 
     if( !poll ) {
       return null;
@@ -47,15 +48,15 @@ export default class Poll extends React.Component {
           poll = { poll }
           handleCloserClick = { this.handleCloserClick }
           handleStepCompletion = { this.submitJoinPoll }
-          inError = { this.state.joinInError }
-          errorMessage = { this.state.joinErrorMessage }
+          inError = { joinInError }
+          errorMessage = { joinErrorMessage }
         />
         <AddPollOption
-          hideAddPollOption = { this.state.hideAddPollOption }
+          hideAddPollOption = { hideAddPollOption }
           handleCloserClick = { this.handleCloserClick }
           handleStepCompletion = { this.submitAddPollOption }
-          inError = { this.state.joinInError }
-          errorMessage = { this.state.joinErrorMessage }
+          inError = { joinInError }
+          errorMessage = { joinErrorMessage }
         />
         <div className="zippypoll__form-holder">
           <ZippyPollForm
@@ -65,6 +66,7 @@ export default class Poll extends React.Component {
             nickname = { nickname }
             addPollOption = { this.addPollOption }
             showAddPollOption = { this.showAddPollOption }
+            pollOptions = { pollOptions }
           />
         </div>
       </div>
@@ -78,7 +80,8 @@ export default class Poll extends React.Component {
           'Content-Type': 'application/json'
       }
     }).then( (response) => {
-      this.setState( { poll: response.data.poll, nickname: this.getNickname(response.data.poll.urlhash) }, ()=> { console.log( this.state.poll) } );
+      this.setState( { poll: response.data.poll, nickname: this.getNickname(response.data.poll.urlhash) }, ()=> this.getPollOptions() );
+
     });
   }
 
@@ -106,6 +109,21 @@ export default class Poll extends React.Component {
     }).then( (response) => {
       if(response.data.status === "success") {
         this.setState( { hideAddPollOption: true } );
+        this.getPollOptions();
+      } else if( response.data.status === "error" ) {
+        this.setState( { joinInError: true, joinErrorMessage: response.data.message })
+      }
+    });
+  }
+
+  getPollOptions = () => {
+    axios.post('/api/getOptions', { pollid: this.state.poll.pollid }, {
+      headers: {
+          'Content-Type': 'application/json'
+      }
+    }).then( (response) => {
+      if(response.data.status === "success") {
+        this.setState( { pollOptions: response.data.options } );
       } else if( response.data.status === "error" ) {
         this.setState( { joinInError: true, joinErrorMessage: response.data.message })
       }

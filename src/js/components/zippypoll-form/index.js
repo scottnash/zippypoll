@@ -1,4 +1,5 @@
 import React from "react";
+import ZippyPollOptions from '../zippy-poll-options';
 
 const renderAddOption = ( nickname, showAddPollOption ) => {
   if( !nickname ) {
@@ -12,14 +13,17 @@ const renderAddOption = ( nickname, showAddPollOption ) => {
 }
 
 
-const ZippyPollForm =  ( { question, creatornickname, datecreated, nickname, showAddPollOption } ) => {
+const ZippyPollForm =  ( { question, creatornickname, datecreated, nickname, showAddPollOption, pollOptions } ) => {
   return (
     <div className="zippypoll__form zippypoll__entry-block">
       <h1>{ question }</h1>
-      <h3>{ nickname }</h3>
 
+      <ZippyPollOptions
+        options = { pollOptions }
+      />
       { renderAddOption( nickname, showAddPollOption ) }
       <div className="zippypoll__form-footer">
+        <div>Voting as: { nickname }</div>
         <div>
           Created By: { creatornickname }
         </div>

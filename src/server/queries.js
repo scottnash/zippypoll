@@ -65,7 +65,7 @@ const addOption = ( req, res, next ) => {
           req.body.creatorid = response[0].pollsterid;
           db.any(  'insert into polloptions(creatorid, pollid, option ) values( ${ creatorid }, ${ pollid }, ${ option } ) returning *', req.body).then( (response)=> {
             req.body.optionid = response[0].id;
-            db.any(  'insert into polloptionvotes(optionid, pollsterid, plusvotes ) values( ${ optionid }, ${creatorid }, 1 ) returning *', req.body).then( (response)=> {
+            db.any(  'insert into polloptionvotes(optionid, pollsterid ) values( ${ optionid }, ${creatorid } ) returning *', req.body).then( (response)=> {
                 res.status(200)
                   .json({
                     id: response[0].optionid,
@@ -89,6 +89,17 @@ const addOption = ( req, res, next ) => {
     });
 }
 
+const getOptions = ( req, res, next ) => {
+  db.any( "SELECT polloptionvotes.optionid, polloptions.option, string_agg( pollsters.nickname, ', ') as nicknames, COUNT(pollsters.nickname) FROM polloptionvotes JOIN polloptions on polloptions.id = polloptionvotes.optionid JOIN  pollsters on pollsters.id = polloptionvotes.pollsterid WHERE polloptions.pollid = ${ pollid } GROUP BY 1, 2 ORDER BY COUNT(pollsters.nickname) desc, polloptionvotes.optionid", req.body).then( (response)=> {
+    res.status(200)
+      .json({
+        options: response,
+        status: 'success',
+        message: 'optionAdded'
+      });
+  });
+}
+
 
 const getPoll = (req, res, next) => {
   db.any( "select polls.id as pollid, * from polls LEFT OUTER JOIN pollsters ON creatorid = pollsters.id where urlhash = ${ urlhash }", req.body).then( (response)=> {
@@ -109,5 +120,6 @@ module.exports = {
   createPoll: createPoll,
   getPoll: getPoll,
   joinPoll: joinPoll,
-  addOption: addOption
+  addOption: addOption,
+  getOptions: getOptions
 };
