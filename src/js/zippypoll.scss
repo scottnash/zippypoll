@@ -14,6 +14,7 @@ html {
 body {
   font-family: Arial, Helvetica, sans-serif;
   min-height: 100%;
+  min-width: 320px;
 }
 .layout__header-holder {
 
@@ -28,8 +29,12 @@ header {
 
 .zippypoll__maxwidth-content-holder {
   margin: 0 auto;
-  max-width: $maxContentWidth;
-  padding: 25px;
+  max-width: 100%;
+  padding: 25px 0;
+  @include breakpoint(md){
+    max-width: $maxContentWidth;
+    padding: 25px;
+  }
 }
 
 .zippypoll__fade-element {
@@ -70,17 +75,20 @@ input[type='text'] {
 
 .zippypoll__entry-block {
   background: $white;
-  border: 1px solid $borderColor;
-  border-radius: 8px;
-  box-shadow: $boxshadow;
-  display: inline-block;
+  display: block;
   margin: 0 auto;
   padding: 20px;
-  text-align: center;
+  text-align: left;
+  @include breakpoint(md){
+    border: 1px solid $borderColor;
+    border-radius: 8px;
+    box-shadow: $boxshadow;
+    max-width: 700px;
+  }
   h1 {
     margin: 0;
   }
-  @include breakpoint(sm) {
+  @include breakpoint(md) {
     padding: 40px;
   }
 }
@@ -96,14 +104,35 @@ input[type='text'] {
   margin-bottom: 10px;
   width: calc( 100% - 64px);
 }
+.zippypoll__field {
+  button {
+    border: 1px solid;
+    border-bottom: 0;
+    border-right: 0;
+    border-top: 0;
+    border-radius: 0 6px 6px 0;
+    height: 38px;
+    margin: 0;
+    position: absolute;
+    right: 2.95px;
+    top: 34.5px;
+  }
+}
+
 button {
-  border: 1px solid;
-  border-bottom: 0;
-  border-right: 0;
-  border-top: 0;
-  border-radius: 0 6px 6px 0;
-  height: 38px;
-  position: absolute;
-  right: 2.95px;
-  top: 34.5px;
+  background-color: $primaryColor;
+  border: 1px solid $primaryAccent;
+  border-radius: 16px;
+  color: $logoRed;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 20px;
+  padding: 10px 15px;
+  &:hover {
+    background: #ffbf00; /* Old browsers */
+    background: -moz-linear-gradient(right, #ffbf00 0%, #ffbf00 0%, #ffff00 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(right, #ffbf00 0%,#ffbf00 0%,#ffff00 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to left, #ffbf00 0%,#ffbf00 0%,#ffff00 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffbf00', endColorstr='#ffff00',GradientType=1 ); /* IE6-9 */
+  }
 }

@@ -5,11 +5,7 @@ const renderAddOption = ( nickname, showAddPollOption ) => {
   if( !nickname ) {
     return null;
   }
-  return (
-    <div>
-      <a onClick = { showAddPollOption }>Add Poll Option</a>
-    </div>
-  )
+  return <button className="zippypoll__add-option" onClick = { showAddPollOption }>Add Poll Option</button>;
 }
 
 

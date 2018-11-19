@@ -1,11 +1,12 @@
 @import '../../sass/config';
 
 .zippypoll__form-holder {
-    text-align: center;
+
 }
 
 .zippypoll__form-footer {
   font-size: .75rem;
+  margin: 20px 0 0 0;
   overflow: auto;
   text-align: left;
   div {
@@ -25,7 +26,32 @@
   margin: 50px 0;
   padding: 0;
   text-align: left;
+  @include breakpoint(sm) {
+    min-height: 200px;
+  }
   li {
     margin: 20px 0 0 0;
+    overflow: auto;
+    position: relative;
+    .zippypoll__option {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 65%;
+    }
+    .zippypoll__votes {
+      float: right;
+      text-align: right;
+      width: 34%;
+      div {
+        display: inline-block;
+      }
+    }
+    .zippypoll__nickname-vote {
+      border: 1px solid $primaryAccent;
+      border-radius: 8px;
+      margin: 5px;
+      padding: 10px;
+    }
   }
 }
