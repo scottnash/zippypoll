@@ -32,6 +32,8 @@ app.post( '/api/getPoll', db.getPoll );
 app.post( '/api/joinPoll', db.joinPoll );
 app.post( '/api/addOption', db.addOption );
 app.post( '/api/getOptions', db.getOptions );
+app.post( '/api/adjustOptionVote', db.adjustOptionVote );
+
 app.get('/*', loadHomePage );
 
 app.listen(8081, function () {

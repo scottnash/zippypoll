@@ -54,4 +54,32 @@
       padding: 10px;
     }
   }
+
+  .zippypoll__option {
+    cursor: pointer;
+    padding-left: 32px;
+    position: relative;
+    &:before {
+      @include coloredButton;
+      border-radius: 50%;
+      content: '-';
+      font-size: 24px;
+      height: 24px;
+      left: 0;
+      line-height: 24px;
+      position: absolute;
+      text-align: center;
+      top: 50%;
+      transform: translateY( -50% );
+      width: 24px;
+    }
+    &.zippypoll__add-option:before {
+      content: '+';
+    }
+    &:hover {
+      &:before {
+        @include coloredButtonHover;
+      }
+    }
+  }
 }

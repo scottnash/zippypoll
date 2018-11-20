@@ -48,3 +48,17 @@
         }
   }
 }
+
+@mixin coloredButton {
+  background-color: $primaryColor;
+  border: 1px solid $primaryAccent;
+  color: $logoRed;
+}
+
+@mixin coloredButtonHover {
+  background: #ffbf00; /* Old browsers */
+  background: -moz-linear-gradient(right, #ffbf00 0%, #ffbf00 0%, #ffff00 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(right, #ffbf00 0%,#ffbf00 0%,#ffff00 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to left, #ffbf00 0%,#ffbf00 0%,#ffff00 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffbf00', endColorstr='#ffff00',GradientType=1 ); /* IE6-9 */
+}

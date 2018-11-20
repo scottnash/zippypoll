@@ -32,6 +32,7 @@ const createPoll = (req, res, next) => {
 }
 
 const joinPoll = ( req, res, next ) => {
+    req.body.nickname = req.body.nickname.trim();
     db.any( "select * from pollsters LEFT OUTER JOIN polls_pollsters ON pollsters.id = polls_pollsters.pollsterid where polls_pollsters.pollid = ${ pollid } AND pollsters.nickname = ${ nickname }", req.body).then( (response)=> {
       if( response.length === 0 ) {
         db.any(  'insert into pollsters(nickname) values( ${nickname} ) returning *', req.body).then( (response)=> {
@@ -89,6 +90,10 @@ const addOption = ( req, res, next ) => {
     });
 }
 
+const adjustOptionVote = ( req, res, next ) => {
+
+}
+
 const getOptions = ( req, res, next ) => {
   db.any( "SELECT polloptionvotes.optionid, polloptions.option, string_agg( pollsters.nickname, ', ') as nicknames, COUNT(pollsters.nickname) FROM polloptionvotes JOIN polloptions on polloptions.id = polloptionvotes.optionid JOIN  pollsters on pollsters.id = polloptionvotes.pollsterid WHERE polloptions.pollid = ${ pollid } GROUP BY 1, 2 ORDER BY COUNT(pollsters.nickname) desc, polloptionvotes.optionid", req.body).then( (response)=> {
     res.status(200)
@@ -117,9 +122,10 @@ const getPoll = (req, res, next) => {
 
 
 module.exports = {
-  createPoll: createPoll,
-  getPoll: getPoll,
-  joinPoll: joinPoll,
-  addOption: addOption,
-  getOptions: getOptions
+  createPoll,
+  getPoll,
+  joinPoll,
+  addOption,
+  getOptions,
+  adjustOptionVote
 };

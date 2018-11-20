@@ -1,29 +1,30 @@
 import React from "react";
 
-const renderOptions = ( options ) => {
+const renderOptions = ( options, nickname, optionClicked ) => {
   return options.map( ( option, index ) => {
-    console.log(option);
+    const nicknames = option.nicknames.split(',');
+    const addOrSubtract = nicknames.indexOf(nickname);
+    const addOrSubtractClass = addOrSubtract ? 'zippypoll__add-option' : 'zippypoll__subtract-option';
     return (
-      <li key={ option.optionid }>
-        <div className="zippypoll__option">{ option.option }</div>
-        <div className="zippypoll__votes">{ renderNicknames( option.nicknames ) }</div>
+      <li key={ option.optionid } onClick = { ()=> { optionClicked( option.optionid, addOrSubtract ) } }>
+        <div className={ `zippypoll__option ${ addOrSubtractClass }` }>{ option.option }</div>
+        <div className="zippypoll__votes">{ renderNicknames( nicknames ) }</div>
       </li>
     )
   });
 };
 
 const renderNicknames = ( nicknames ) => {
-  const nickNameArray = nicknames.split(',');
-  return nickNameArray.map( ( nickname, index ) => {
+  return nicknames.map( ( nickname, index ) => {
     return <div key={ index } className="zippypoll__nickname-vote">{ nickname }</div>;
   });
 };
 
 
-const ZippyPollOptions =  ( { options } ) => {
+const ZippyPollOptions =  ( { options, nickname, optionClicked } ) => {
   return (
     <ul className="zippypoll__options-holder">
-      { renderOptions( options )}
+      { renderOptions( options, nickname, optionClicked )}
     </ul>
   )
 };

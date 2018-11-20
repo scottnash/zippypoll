@@ -60,6 +60,7 @@ export class InputText extends Component {
              }
            />
            <button
+              className="colored-button"
               type="button"
               onClick= { this.handleSubmit }
            >{ this.props.buttonLabel }</button>
