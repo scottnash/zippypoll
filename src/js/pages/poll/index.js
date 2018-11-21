@@ -4,6 +4,7 @@ import ZippyPollForm from '../../components/zippypoll-form';
 import JoinPoll from '../../components/joinpoll';
 import AddPollOption from '../../components/add-poll-option';
 import * as cookies from '../../helpers/cookies.js';
+import io from 'socket.io-client';
 
 if (process.env.BROWSER) {
   require('./poll.scss');
@@ -31,6 +32,14 @@ export default class Poll extends React.Component {
 
   componentWillUnmount() {
     this.props.turnOnEntryAnimation();
+  }
+
+  componentDidMount() {
+    const THIS = this;
+    this.socket = io();
+    this.socket.on('options updated', function( response ){
+      THIS.setState( { pollOptions: response } );
+    });
   }
 
   render() {
@@ -111,7 +120,6 @@ export default class Poll extends React.Component {
     }).then( (response) => {
       if(response.data.status === "success") {
         this.setState( { hideAddPollOption: true } );
-        this.getPollOptions();
       } else if( response.data.status === "error" ) {
         this.setState( { joinInError: true, joinErrorMessage: response.data.message })
       }
@@ -144,7 +152,7 @@ export default class Poll extends React.Component {
       }
     }).then( (response) => {
       if(response.data.status === "success") {
-        this.getPollOptions();
+
       } else if( response.data.status === "error" ) {
         this.setState( { joinInError: true, joinErrorMessage: response.data.message })
       }

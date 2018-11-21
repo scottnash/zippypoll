@@ -5,8 +5,14 @@ import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom";
 import Layout from "../js/layout";
 import { htmlTemplate } from "./template";
-import * as db from './queries';
-const app = express()
+
+const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+const db = require('./queries')(io);
+io.on('connection', function(socket){
+  console.log('a user connected');
+});
 
 app.use('/assets/scripts', express.static('./src/dist/scripts'));
 app.use('/assets/css', express.static('./src/dist/css'));
@@ -36,6 +42,6 @@ app.post( '/api/adjustOptionVote', db.adjustOptionVote );
 
 app.get('/*', loadHomePage );
 
-app.listen(8081, function () {
+server.listen(8081, function () {
   console.log('app listening on port 8081!')
 });
