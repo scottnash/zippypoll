@@ -133,23 +133,22 @@ export default class Poll extends React.Component {
   }
 
   optionClicked = ( optionid, addOrSubtract ) => {
-    console.log( this.state.poll );
-    // const params = {
-    //   pollid: this.state.poll.pollid,
-    //   optionid: optionid,
-    //   addOrSubtract: addOrSubtract
-    // }
-    // axios.post('/api/adjustOptionVote', params, {
-    //   headers: {
-    //       'Content-Type': 'application/json'
-    //   }
-    // }).then( (response) => {
-    //   if(response.data.status === "success") {
-    //     this.setState( { pollOptions: response.data.options } );
-    //   } else if( response.data.status === "error" ) {
-    //     this.setState( { joinInError: true, joinErrorMessage: response.data.message })
-    //   }
-    // });
+    const params = {
+      pollid: this.state.poll.pollid,
+      optionid: optionid,
+      nickname: this.state.nickname
+    }
+    axios.post('/api/adjustOptionVote', params, {
+      headers: {
+          'Content-Type': 'application/json'
+      }
+    }).then( (response) => {
+      if(response.data.status === "success") {
+        this.getPollOptions();
+      } else if( response.data.status === "error" ) {
+        this.setState( { joinInError: true, joinErrorMessage: response.data.message })
+      }
+    });
   }
 
   handleCloserClick = ( event, doItAnyway )=> {

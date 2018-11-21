@@ -91,7 +91,30 @@ const addOption = ( req, res, next ) => {
 }
 
 const adjustOptionVote = ( req, res, next ) => {
-
+  db.any( "select polls_pollsters.pollsterid from polls_pollsters JOIN pollsters ON pollsters.id = polls_pollsters.pollsterid WHERE polls_pollsters.pollid = ${ pollid } and pollsters.nickname = ${ nickname }", req.body).then( (response)=> {
+    req.body.creatorid = response[0].pollsterid;
+    db.any( "select * from polloptionvotes WHERE optionid = ${ optionid } and pollsterid = ${ creatorid }", req.body).then( (response)=> {
+      if( response.length === 0 ) {
+        db.any( 'insert into polloptionvotes(optionid, pollsterid ) values( ${ optionid }, ${creatorid } ) returning *', req.body).then( (response)=> {
+            res.status(200)
+              .json({
+                id: response[0].optionid,
+                status: 'success',
+                message: 'optionAdded'
+              });
+        });
+      } else {
+        db.any( 'DELETE FROM polloptionvotes WHERE optionid =  ${ optionid } AND pollsterid = ${creatorid } returning *', req.body).then( (response)=> {
+            res.status(200)
+              .json({
+                id: response[0].optionid,
+                status: 'success',
+                message: 'optionAdded'
+              });
+        });
+      }
+    });
+  });
 }
 
 const getOptions = ( req, res, next ) => {
