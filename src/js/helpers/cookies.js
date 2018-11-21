@@ -13,4 +13,8 @@ const setCookie = (cookieName, cookieValue, expires) => {
   document.cookie = `${ cookieName } = ${ cookieValue };  path=/; ${ expiresString }`;
 }
 
-export { getCookie, setCookie };
+const getAllPollCookies = ()=> {
+    console.log(document.cookie);
+}
+
+export { getCookie, setCookie, getAllPollCookies };

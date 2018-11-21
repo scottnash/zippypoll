@@ -5,6 +5,7 @@ import About from "../pages/about";
 import Poll from "../pages/poll";
 import Logo from "../components/logo";
 import HeaderLinks from "../components/headerlinks";
+import * as cookies from '../helpers/cookies.js';
 
 export default class Layout extends React.Component {
   constructor(props){
@@ -23,12 +24,12 @@ export default class Layout extends React.Component {
   }
 
   render() {
+    cookies.getAllPollCookies();
     return (
         <div className={ this.state.entryAnimation }>
           <div className="layout__header-holder">
             <header>
               <Logo />
-              <HeaderLinks />
             </header>
           </div>
           <div className="layout__body-holder">
@@ -39,7 +40,7 @@ export default class Layout extends React.Component {
             </Switch>
           </div>
           <div className="layout__footer-holder">
-
+              <HeaderLinks />
           </div>
         </div>
     );
