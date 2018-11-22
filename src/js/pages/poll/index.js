@@ -104,7 +104,7 @@ export default class Poll extends React.Component {
     }).then( (response) => {
       if(response.data.status === "success") {
         this.setState ( { nickname: fieldValue, hideJoinPoll: true }, ()=> {
-          cookies.setCookie( this.state.poll.urlhash, fieldValue );
+          cookies.setCookie( `zippypoll_${ this.state.poll.urlhash }`, `${ fieldValue },${ this.state.poll.pollquestion }` );
         })
       } else if( response.data.status === "error" ) {
         this.setState( { joinInError: true, joinErrorMessage: response.data.message })
@@ -175,6 +175,6 @@ export default class Poll extends React.Component {
   }
 
   getNickname = (urlHash) => {
-    return cookies.getCookie(urlHash);
+    return cookies.getCookie(`zippypoll_${ urlHash }` );
   }
 }
