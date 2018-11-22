@@ -4,7 +4,7 @@ import Home from "../pages/home";
 import About from "../pages/about";
 import Poll from "../pages/poll";
 import Logo from "../components/logo";
-import HeaderLinks from "../components/headerlinks";
+import Foot from "../components/foot";
 import * as cookies from '../helpers/cookies.js';
 
 export default class Layout extends React.Component {
@@ -12,8 +12,13 @@ export default class Layout extends React.Component {
     super(props);
     this.state = {
       animating: false,
-      entryAnimation: null
+      entryAnimation: null,
+      participatingPolls: []
     }
+  }
+
+  componentDidMount() {
+    this.updateFooterPolls();
   }
 
   turnOnEntryAnimation = ( ) => {
@@ -23,8 +28,11 @@ export default class Layout extends React.Component {
     } )
   }
 
+  updateFooterPolls = () => {
+    this.setState( { participatingPolls: cookies.getAllPollCookies() } );
+  }
+
   render() {
-    cookies.getAllPollCookies();
     return (
         <div className={ this.state.entryAnimation }>
           <div className="layout__header-holder">
@@ -34,14 +42,14 @@ export default class Layout extends React.Component {
           </div>
           <div className="layout__body-holder">
             <Switch>
-                <Route path="/poll/:id" render= { (props) => <Poll {...props} turnOnEntryAnimation = { this.turnOnEntryAnimation }/> } />
+                <Route path="/poll/:id" render= { (props) => <Poll {...props} turnOnEntryAnimation = { this.turnOnEntryAnimation }/> } updateFooterPolls = { this.updateFooterPolls } />
                 <Route path="/about" exact render= { (props) => <About {...props} turnOnEntryAnimation = { this.turnOnEntryAnimation }/> } />
-                <Route render= { (props) => <Home {...props} turnOnEntryAnimation = { this.turnOnEntryAnimation }/> } />
+                <Route render= { (props) => <Home {...props} turnOnEntryAnimation = { this.turnOnEntryAnimation } updateFooterPolls = { this.updateFooterPolls } /> } />
             </Switch>
           </div>
-          <div className="layout__footer-holder">
-              <HeaderLinks />
-          </div>
+          <footer className="layout__footer-holder">
+              <Foot participatingPolls = { this.state.participatingPolls } />
+          </footer>
         </div>
     );
   }

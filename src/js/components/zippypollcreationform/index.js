@@ -91,7 +91,7 @@ class ZippyPollCreationForm extends React.Component {
       }
     }).then( (response) => {
       if(response.data.status === "success") {
-        cookies.setCookie( `zippypoll_${ response.data.urlhash }`, this.state.zippyPollForm.nickname );
+        cookies.setCookie( `zippypoll_${ response.data.urlhash }`, `${ this.state.zippyPollForm.nickname },${ this.state.zippyPollForm.pollquestion }` );
         this.props.history.push(`/poll/${ response.data.urlhash }`);
       }
     });
