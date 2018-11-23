@@ -40,7 +40,7 @@ header {
 .zippypoll__maxwidth-content-holder {
   margin: 0 auto;
   max-width: 100%;
-  padding: 25px 0 75px;
+  padding: 25px 0 125px;
   @include breakpoint(md){
     max-width: $maxContentWidth;
     padding: 75px 25px;

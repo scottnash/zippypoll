@@ -40,7 +40,17 @@ footer {
   }
   &.open {
     ul {
+      border: 1px solid $borderColor;
+      border-bottom: 0;
       display: block;
+      left: -25px;
+      width: calc(100vw);
+      @include breakpoint(md) {
+        border: 0;
+        box-shadow: $boxshadow;
+        left: 0;
+        width: 50vw;
+      }
     }
   }
 }
