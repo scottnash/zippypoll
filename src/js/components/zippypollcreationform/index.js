@@ -30,6 +30,7 @@ class ZippyPollCreationForm extends React.Component {
         handleStepCompletion = { this.handleStepCompletion }
         type="text"
         validate = { formFieldValidators.requiredValidator }
+        value = { '' }
       />,
       <InputText
         activeFormStep = { this.state.activeFormStep }
@@ -41,6 +42,7 @@ class ZippyPollCreationForm extends React.Component {
         handleStepCompletion = { this.handleStepCompletion }
         type="text"
         validate = { formFieldValidators.requiredValidator }
+        value = { '' }
       />
     ]
   }

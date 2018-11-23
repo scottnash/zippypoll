@@ -65,16 +65,15 @@ const addOption = ( req, res, next, io ) => {
         db.any( "select * from pollsters left outer join polls_pollsters on pollsters.id = polls_pollsters.pollsterid WHERE polls_pollsters.pollid = ${ pollid } AND pollsters.nickname = ${ nickname }", req.body).then( (response)=> {
           req.body.creatorid = response[0].pollsterid;
           db.any(  'insert into polloptions(creatorid, pollid, option ) values( ${ creatorid }, ${ pollid }, ${ option } ) returning *', req.body).then( (response)=> {
-                emitOptions( req, res, next, io );
-                res.status(200)
-                  .json({
-                    id: response[0].id,
-                    status: 'success',
-                    message: 'optionAdded'
-                  });
+            emitOptions( req, res, next, io );
+            res.status(200)
+              .json({
+                id: response[0].id,
+                status: 'success',
+                message: 'optionAdded'
+              });
           })
         });
-
       } else {
         res.status(200)
           .json({
@@ -86,6 +85,43 @@ const addOption = ( req, res, next, io ) => {
     .catch(function (err) {
       return next(err);
     });
+}
+
+const editOption = ( req, res, next, io ) => {
+    db.any( "select * from polloptions WHERE pollid = ${ pollid } AND option = ${ option }", req.body).then( (response)=> {
+      if( response.length === 0 ) {
+        db.any(  'UPDATE polloptions SET option = ${ option } WHERE id = ${ optionid } returning *', req.body).then( (response)=> {
+          emitOptions( req, res, next, io );
+          res.status(200)
+            .json({
+              id: response[0].id,
+              status: 'success',
+              message: 'optionEdited'
+            });
+        })
+      } else {
+        res.status(200)
+          .json({
+            status: 'error',
+            message: 'That option is already in the poll.'
+          });
+      }
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
+const editQuestion = ( req, res, next, io ) => {
+  db.any(  'UPDATE polls SET pollquestion = ${ pollquestion } WHERE id = ${ pollid } returning *', req.body).then( (response)=> {
+    getPoll( req, res, next, io, true );
+    res.status(200)
+      .json({
+        id: response[0].id,
+        status: 'success',
+        message: 'optionEdited'
+      });
+  })
 }
 
 const adjustOptionVote = ( req, res, next, io ) => {
@@ -118,7 +154,7 @@ const adjustOptionVote = ( req, res, next, io ) => {
 }
 
 const getOptions = ( req, res, next ) => {
-  db.any( "SELECT polloptions.id, polloptions.option, string_agg( pollsters.nickname, ', ') as nicknames, COUNT(pollsters.nickname) FROM polloptions LEFT OUTER JOIN polloptionvotes on polloptions.id = polloptionvotes.optionid LEFT OUTER JOIN  pollsters on pollsters.id = polloptionvotes.pollsterid WHERE polloptions.pollid = ${ pollid } GROUP BY 1, 2 ORDER BY COUNT(pollsters.nickname) desc, polloptions.id", req.body).then( (response)=> {
+  db.any( "SELECT polloptions.id, polloptions.option, string_agg( pollsters.nickname, ', ') as nicknames, COUNT(pollsters.nickname), ( SELECT nickname from pollsters where id = polloptions.creatorid ) as optionCreator FROM polloptions LEFT OUTER JOIN polloptionvotes on polloptions.id = polloptionvotes.optionid LEFT OUTER JOIN  pollsters on pollsters.id = polloptionvotes.pollsterid WHERE polloptions.pollid = ${ pollid } GROUP BY 1, 2 ORDER BY COUNT(pollsters.nickname) desc, polloptions.id", req.body).then( (response)=> {
     res.status(200)
       .json({
         options: response,
@@ -129,20 +165,25 @@ const getOptions = ( req, res, next ) => {
 }
 
 const emitOptions = ( req, res, next, io ) => {
-  db.any( "SELECT polloptions.id, polloptions.option, string_agg( pollsters.nickname, ', ') as nicknames, COUNT(pollsters.nickname) FROM polloptions LEFT OUTER JOIN polloptionvotes on polloptions.id = polloptionvotes.optionid LEFT OUTER JOIN  pollsters on pollsters.id = polloptionvotes.pollsterid WHERE polloptions.pollid = ${ pollid } GROUP BY 1, 2 ORDER BY COUNT(pollsters.nickname) desc, polloptions.id", req.body).then( (response)=> {
+  db.any( "SELECT polloptions.id, polloptions.option, string_agg( pollsters.nickname, ', ') as nicknames, COUNT(pollsters.nickname), ( SELECT nickname from pollsters where id = polloptions.creatorid ) as optionCreator FROM polloptions LEFT OUTER JOIN polloptionvotes on polloptions.id = polloptionvotes.optionid LEFT OUTER JOIN  pollsters on pollsters.id = polloptionvotes.pollsterid WHERE polloptions.pollid = ${ pollid } GROUP BY 1, 2 ORDER BY COUNT(pollsters.nickname) desc, polloptions.id", req.body).then( (response)=> {
     io.emit('options updated', response );
   });
 }
 
 
-const getPoll = (req, res, next) => {
+const getPoll = (req, res, next, io, emit) => {
   db.any( "select polls.id as pollid, * from polls LEFT OUTER JOIN pollsters ON creatorid = pollsters.id where urlhash = ${ urlhash }", req.body).then( (response)=> {
-        res.status(200)
-          .json({
-            poll: response[0],
-            status: 'success',
-            message: 'poll fetched'
-          });
+        if( emit ) {
+          io.emit('poll updated', response[0] );
+        } else {
+          res.status(200)
+            .json({
+              poll: response[0],
+              status: 'success',
+              message: 'poll fetched'
+            });
+        }
+
     })
     .catch(function (err) {
       return next(err);
@@ -153,9 +194,11 @@ const getPoll = (req, res, next) => {
 module.exports = ( io ) => {
   return {
     createPoll,
-    getPoll,
+    getPoll: ( req, res, next ) => getPoll( req, res, next, io, false ),
     joinPoll,
     addOption: ( req, res, next ) => addOption( req, res, next, io ),
+    editOption: ( req, res, next ) => editOption( req, res, next, io ),
+    editQuestion: ( req, res, next ) => editQuestion( req, res, next, io ),
     getOptions,
     adjustOptionVote: ( req, res, next ) => adjustOptionVote( req, res, next, io )
   }

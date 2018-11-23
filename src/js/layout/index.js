@@ -42,14 +42,12 @@ export default class Layout extends React.Component {
           </div>
           <div className="layout__body-holder">
             <Switch>
-                <Route path="/poll/:id" render= { (props) => <Poll {...props} turnOnEntryAnimation = { this.turnOnEntryAnimation }/> } updateFooterPolls = { this.updateFooterPolls } />
+                <Route path="/poll/:id" render= { (props) => <Poll key={ props.location.key } {...props} turnOnEntryAnimation = { this.turnOnEntryAnimation }/> } updateFooterPolls = { this.updateFooterPolls }  />
                 <Route path="/about" exact render= { (props) => <About {...props} turnOnEntryAnimation = { this.turnOnEntryAnimation }/> } />
                 <Route render= { (props) => <Home {...props} turnOnEntryAnimation = { this.turnOnEntryAnimation } updateFooterPolls = { this.updateFooterPolls } /> } />
             </Switch>
           </div>
-          <footer className="layout__footer-holder">
-              <Foot participatingPolls = { this.state.participatingPolls } />
-          </footer>
+          <Foot participatingPolls = { this.state.participatingPolls } />
         </div>
     );
   }

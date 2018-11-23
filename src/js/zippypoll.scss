@@ -30,10 +30,10 @@ header {
 .zippypoll__maxwidth-content-holder {
   margin: 0 auto;
   max-width: 100%;
-  padding: 25px 0;
+  padding: 25px 0 75px;
   @include breakpoint(md){
     max-width: $maxContentWidth;
-    padding: 25px;
+    padding: 75px 25px;
   }
 }
 
@@ -126,7 +126,7 @@ input[type='text'] {
   }
 }
 
-button {
+button, .button {
   border-radius: 16px;
   cursor: pointer;
   font-weight: bold;
@@ -134,9 +134,10 @@ button {
   padding: 10px 15px;
 }
 
-footer {
-  bottom: 0;
-  left: 0;
-  position: fixed;
-  width: 100%;
+div.button {
+  display: inline-block;
+  a {
+    color: $logoRed;
+    text-decoration: none;
+  }
 }

@@ -3,8 +3,9 @@ import React, { Component } from "react";
 export class InputText extends Component {
   constructor( props ){
     super( props );
+
     this.state = {
-      inputValue: '',
+      inputValue: this.props.value,
       inError: false,
       touched: false
     }
