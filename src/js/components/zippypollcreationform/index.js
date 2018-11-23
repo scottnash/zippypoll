@@ -41,7 +41,7 @@ class ZippyPollCreationForm extends React.Component {
         placeholder="Nickname"
         handleStepCompletion = { this.handleStepCompletion }
         type="text"
-        validate = { formFieldValidators.requiredValidator }
+        validate = { formFieldValidators.nopunctuation }
         value = { '' }
       />
     ]
@@ -93,7 +93,7 @@ class ZippyPollCreationForm extends React.Component {
       }
     }).then( (response) => {
       if(response.data.status === "success") {
-        cookies.setCookie( `zippypoll_${ response.data.urlhash }`, `${ this.state.zippyPollForm.nickname },${ this.state.zippyPollForm.pollquestion }` );
+        cookies.setCookie( `zippypoll_${ response.data.urlhash }`, JSON.stringify( { nickname: this.state.zippyPollForm.nickname, pollquestion: this.state.zippyPollForm.pollquestion } ) );
         this.props.history.push(`/poll/${ response.data.urlhash }`);
       }
     });

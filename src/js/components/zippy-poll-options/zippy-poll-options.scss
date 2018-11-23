@@ -9,11 +9,12 @@
 
 .zippypoll__options-holder {
   list-style-type: none;
-  margin: 50px 0;
+  margin: 25px 0;
   padding: 0;
   text-align: left;
-  @include breakpoint(sm) {
-    min-height: 200px;
+  @include breakpoint(md) {
+    margin: 50px 0;
+    min-height: 150px;
   }
   li {
     line-height: 30px;
@@ -21,16 +22,33 @@
     min-height: 52px;
     overflow: auto;
     position: relative;
+    text-align: left;
+    @include breakpoint(md) {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      text-align: right;
+    }
     .zippypoll__option {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 65%;
+      display: block;
+      @include breakpoint(md) {
+        display: inline-block;
+        text-align: left;
+        width: 65%;
+      }
     }
     .zippypoll__votes {
-      float: right;
-      text-align: right;
-      width: 34%;
+      font-size: .75rem;
+      line-height: .75rem;
+      margin-top: 10px;
+      padding-left: 32px;
+      @include breakpoint(md) {
+        display: inline-block;
+        margin-top: 10px;
+        padding-left: 0;
+        text-align: right;
+        width: 30%;
+      }
       div {
         display: inline-block;
       }
@@ -38,8 +56,8 @@
     .zippypoll__nickname-vote {
       border: 1px solid $primaryAccent;
       border-radius: 8px;
-      margin: 5px;
-      padding: 10px;
+      margin: 0 5px 5px 5px;
+      padding: 7px;
     }
   }
 
@@ -58,7 +76,7 @@
       font-size: 24px;
       height: 24px;
       left: 0;
-      line-height: 24px;
+      line-height: 22px;
       position: absolute;
       text-align: center;
       top: 50%;
@@ -67,6 +85,10 @@
     }
     &.zippypoll__add-option:before {
       content: '+';
+      line-height: 24px;
+    }
+    &.zippypoll__subtract-option:before {
+      @include coloredButtonHover;
     }
     &.zippypoll__hide-voting:before {
       display: none;

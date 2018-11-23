@@ -1,3 +1,5 @@
+@import '../../sass/config';
+
 footer {
   background-color: white;
   bottom: 0;
@@ -5,20 +7,26 @@ footer {
       -moz-box-shadow: 0px 0px 10px rgba(0,0,0,.2);
                  box-shadow: 0px 0px 10px rgba(0,0,0,.2);
   left: 0;
-  padding: 25px 0;
+  padding: 15px 0 10px;
   position: fixed;
   width: 100%;
   .layout__inner-footer {
     margin: 0 auto;
     max-width: 1280px;
     overflow: visible;
+    padding: 0 25px;
   }
 }
 
 .zippypoll__participating-polls {
+  display: block;
   float: left;
+  height: 42px;
   position: relative;
   label {
+    display: inline-block;
+    height: 42px;
+    line-height: 42px;
     margin: 0;
   }
   ul {
@@ -38,7 +46,18 @@ footer {
 }
 
 .zippypoll__footer-links {
-  float: right;
-  margin: 0;
+  font-size: .75rem;
+  margin: 10px 0;
   padding: 0;
+  text-align: center;
+}
+
+.layout__footer-actions {
+  height: 42px;
+  overflow: visible;
+  .colored-button {
+    float: right;
+    height: 20px;
+    margin: 0;
+  }
 }

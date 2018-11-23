@@ -20,11 +20,17 @@ const getAllPollCookies = ()=> {
     cookies.map( ( cookie ) => {
       if( cookie.indexOf("zippypoll_") >= 0 ) {
         let cookieparts = cookie.split('=');
-        polls.push( {
-          hash: cookieparts[0].split('_')[1],
-          nickname: cookieparts[1].split(',')[0],
-          question: cookieparts[1].split(',')[1]
-        });
+        try {
+          let pollInfo = JSON.parse( cookieparts[1] );
+          polls.push( {
+            hash: cookieparts[0].split('_')[1],
+            nickname: pollInfo.nickname,
+            question: pollInfo.pollquestion
+          });
+        }
+        catch(error){
+
+        }
       }
     });
     return polls;

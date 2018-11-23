@@ -1,6 +1,9 @@
 @import './sass/config';
 @import "~normalize.css";
 
+a, a:active, a:focus {
+  color: $logoRed;
+}
 a:active, a:focus, input, input:focus {
   outline: 0;
   -moz-outline-style: none;
@@ -8,6 +11,13 @@ a:active, a:focus, input, input:focus {
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 30px white inset;
 }
+input[type=text]::-ms-clear {  display: none; width : 0; height: 0; }
+input[type=text]::-ms-reveal {  display: none; width : 0; height: 0; }
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration { display: none; }
+
 html {
   height: 100%;
 }
@@ -139,5 +149,19 @@ div.button {
   a {
     color: $logoRed;
     text-decoration: none;
+  }
+}
+
+h1 {
+  font-size: 1.5rem;
+  @include breakpoint(md) {
+    font-size: 2rem;
+  }
+}
+
+h2 {
+  font-size: 1.25rem;
+  @include breakpoint(md) {
+    font-size: 1.5rem;
   }
 }

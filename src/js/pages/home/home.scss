@@ -1,5 +1,8 @@
 @import '../../sass/config';
 
-.zippypoll__home {
-    text-align: center;
+.zippypoll__home__entry-block  {
+    padding-top: 35px;
+    @include breakpoint(md) {
+      padding-top: 25px;
+    }
 }

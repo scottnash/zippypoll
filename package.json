@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "dev": "nodemon ./src/server/server.js --exec babel-node | webpack --watch --mode development",
+    "dev": "nodemon --signal SIGTERM ./src/server/server.js --exec babel-node | webpack --watch --mode development",
     "serve": "node ./src/dist/server.js | webpack --mode production",
     "rollup": "./node_modules/.bin/rollup -c",
     "webpack": "webpack --mode production",

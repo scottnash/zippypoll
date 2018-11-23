@@ -36,18 +36,20 @@ export default class Footer extends React.Component {
     return (
       <footer className="layout__footer-holder">
         <div className="layout__inner-footer">
-          <div className={ `zippypoll__participating-polls ${ this.state.myPollsOpen ? 'open': '' }` }>
-            <label onClick = { this.openMyPolls }>My Polls</label>
-            <ul>
-              { this.renderParticipatingPolls() }
-            </ul>
+          <div className="layout__footer-actions">
+            <div className={ `zippypoll__participating-polls ${ this.state.myPollsOpen ? 'open': '' }` }>
+              <label onClick = { this.openMyPolls }>My Polls</label>
+              <ul>
+                { this.renderParticipatingPolls() }
+              </ul>
+            </div>
+            <div className="colored-button  button">
+              <Link to="/">Create a Poll</Link>
+            </div>
           </div>
-          <div className="colored-button  button">
-            <Link to="/">Create a Poll</Link>
+          <div className="zippypoll__footer-links">
+            <Link to="/about">About Zippypoll</Link> | <span>&copy; { new Date().getFullYear() } Scott Nash</span>
           </div>
-          <ul className="zippypoll__footer-links">
-              <Link to="/about">About</Link>
-          </ul>
         </div>
       </footer>
     );
