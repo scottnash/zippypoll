@@ -1,5 +1,8 @@
 import React, { Fragment } from "react";
 import ZippyPollOptions from '../zippy-poll-options';
+if (process.env.BROWSER) {
+  require('./zippypoll-form.scss');
+}
 
 const renderAddOption = ( nickname, showAddPollOption ) => {
   if( !nickname ) {
@@ -16,16 +19,24 @@ const renderVotingAs = ( nickname, showJoinPoll ) => {
   }
 }
 
+const renderEdit = ( pollOptions, question, creatornickname, nickname, showEditQuestion  ) => {
+  if( pollOptions.length === 0 && creatornickname === nickname ){
+    return <span onClick={ showEditQuestion } className="zippypoll__edit-question">Edit</span>;
+  }
+  return null;
+}
 
-const ZippyPollForm =  ( { question, creatornickname, datecreated, nickname, showAddPollOption, pollOptions, showJoinPoll, optionClicked } ) => {
+
+const ZippyPollForm =  ( { question, creatornickname, datecreated, nickname, showAddPollOption, pollOptions, showJoinPoll, optionClicked,  showEditQuestion  } ) => {
   return (
     <div className="zippypoll__form zippypoll__entry-block">
-      <h1>{ question }</h1>
+      <h1>{ question } { renderEdit( pollOptions, question, creatornickname, nickname,  showEditQuestion ) }</h1>
 
       <ZippyPollOptions
         options = { pollOptions }
         nickname = { nickname }
         optionClicked = { optionClicked }
+        showAddPollOption = { showAddPollOption }
       />
       { renderAddOption( nickname, showAddPollOption ) }
       <div className="zippypoll__form-footer">

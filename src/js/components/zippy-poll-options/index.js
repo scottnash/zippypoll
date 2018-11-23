@@ -1,13 +1,23 @@
 import React from "react";
+if (process.env.BROWSER) {
+  require('./zippy-poll-options.scss');
+}
 
-const renderOptions = ( options, nickname, optionClicked ) => {
+const renderEdit = ( option, nickname, showAddPollOption ) => {
+  if( ( !option.nicknames || option.nicknames.length === 0 ) && nickname === option.optioncreator ) {
+    return <span onClick = { (e)=> { e.stopPropagation(); showAddPollOption( e, option ) } } className="zippypoll_edit">Edit</span>
+  }
+  return null;
+}
+
+const renderOptions = ( options, nickname, optionClicked, showAddPollOption ) => {
   return options.map( ( option, index ) => {
     const nicknames = option.nicknames ? option.nicknames.split(',') : [];
     const addOrSubtract = nicknames.indexOf(nickname);
     const addOrSubtractClass = addOrSubtract ? 'zippypoll__add-option' : 'zippypoll__subtract-option';
     return (
       <li key={ option.id } onClick = { ()=> { optionClicked( option.id, addOrSubtract ) } }>
-        <div className={ `zippypoll__option ${ addOrSubtractClass }` }>{ option.option }</div>
+        <div className={ `zippypoll__option ${ addOrSubtractClass }` }>{ option.option }{ renderEdit( option, nickname, showAddPollOption ) }</div>
         <div className="zippypoll__votes">{ renderNicknames( nicknames ) }</div>
       </li>
     )
@@ -21,10 +31,10 @@ const renderNicknames = ( nicknames ) => {
 };
 
 
-const ZippyPollOptions =  ( { options, nickname, optionClicked } ) => {
+const ZippyPollOptions =  ( { options, nickname, optionClicked, showAddPollOption } ) => {
   return (
     <ul className="zippypoll__options-holder">
-      { renderOptions( options, nickname, optionClicked )}
+      { renderOptions( options, nickname, optionClicked, showAddPollOption )}
     </ul>
   )
 };

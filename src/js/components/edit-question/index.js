@@ -3,8 +3,8 @@ import { InputText } from '../form-fields';
 import formFieldValidators from '../form-field-validators';
 import Modal from '../modal';
 
-const AddPollOption = ( { hideAddPollOption, handleCloserClick, handleStepCompletion, inError, errorMessage } ) => {
-    if( hideAddPollOption ) {
+const EditQuestion = ( { hideEditQuestion, handleCloserClick, handleStepCompletion, inError, errorMessage, value } ) => {
+    if( hideEditQuestion ) {
       return null;
     }
     return (
@@ -12,17 +12,18 @@ const AddPollOption = ( { hideAddPollOption, handleCloserClick, handleStepComple
         handleCloserClick = { handleCloserClick }
       >
         <div className="zippypoll__entry-block">
-          <div className="zippypoll__add-user-form zippypoll__form-step zippypoll__active-form-step">
+          <div className="zippypoll__edit-question-form zippypoll__form-step zippypoll__active-form-step">
             <InputText
               buttonLabel = "Go"
-              label = { "Add a poll option" }
-              name="polloption"
-              placeholder="Poll Option"
+              label = "Edit question"
+              name="pollquestion"
+              placeholder="Poll Question"
               handleStepCompletion = { handleStepCompletion }
               type="text"
               validate = { formFieldValidators.requiredValidator }
               inError = { inError }
               errorMessage = { errorMessage }
+              value = { value }
             />
           </div>
         </div>
@@ -30,4 +31,4 @@ const AddPollOption = ( { hideAddPollOption, handleCloserClick, handleStepComple
     )
 };
 
-export default AddPollOption;
+export default EditQuestion;

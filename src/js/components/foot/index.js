@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 if (process.env.BROWSER) {
@@ -8,9 +8,16 @@ if (process.env.BROWSER) {
 export default class Footer extends React.Component {
   constructor(props){
     super(props);
+
+    this.state = {
+      myPollsOpen: false
+    }
   }
 
   renderParticipatingPolls = () => {
+    if( this.props.participatingPolls.length === 0 ) {
+      return <li>No Polls Found</li>;
+    }
     return this.props.participatingPolls.map( ( poll, index ) => {
       if( !poll.question ) {
         return null;
@@ -21,18 +28,28 @@ export default class Footer extends React.Component {
     });
   }
 
+  openMyPolls = () => {
+    this.setState( { myPollsOpen: !this.state.myPollsOpen } );
+  }
+
   render() {
     return (
-      <Fragment>
-        <div>
-          <ul>
-            { this.renderParticipatingPolls() }
+      <footer className="layout__footer-holder">
+        <div className="layout__inner-footer">
+          <div className={ `zippypoll__participating-polls ${ this.state.myPollsOpen ? 'open': '' }` }>
+            <label onClick = { this.openMyPolls }>My Polls</label>
+            <ul>
+              { this.renderParticipatingPolls() }
+            </ul>
+          </div>
+          <div className="colored-button  button">
+            <Link to="/">Create a Poll</Link>
+          </div>
+          <ul className="zippypoll__footer-links">
+              <Link to="/about">About</Link>
           </ul>
         </div>
-        <ul className="zippypoll__header-links">
-            <Link to="/about">About</Link>
-        </ul>
-      </Fragment>
+      </footer>
     );
   }
 }

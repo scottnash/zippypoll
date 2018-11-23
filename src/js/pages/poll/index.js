@@ -2,7 +2,8 @@ import React from "react";
 import axios from 'axios';
 import ZippyPollForm from '../../components/zippypoll-form';
 import JoinPoll from '../../components/joinpoll';
-import AddPollOption from '../../components/add-poll-option';
+import AddPollOption from '../../components/add-edit-poll-option';
+import EditQuestion from '../../components/edit-question';
 import * as cookies from '../../helpers/cookies.js';
 import io from 'socket.io-client';
 
@@ -24,7 +25,11 @@ export default class Poll extends React.Component {
       hideAddPollOption: true,
       addPollOptionInError: false,
       addPollOptionErrorMessage: '',
-      pollOptions: []
+      pollOptions: [],
+      optionValue: null,
+      optionID: null,
+      submitPollOption: this.submitAddPollOption,
+      hideEditQuestion: true
     }
 
     this.getPoll();
@@ -32,6 +37,11 @@ export default class Poll extends React.Component {
 
   componentWillUnmount() {
     this.props.turnOnEntryAnimation();
+    this.socket.disconnect(true)
+  }
+
+  shouldComponentUpdate( prevProps ) {
+    return true;
   }
 
   componentDidMount() {
@@ -40,10 +50,13 @@ export default class Poll extends React.Component {
     this.socket.on('options updated', function( response ){
       THIS.setState( { pollOptions: response } );
     });
+    this.socket.on('poll updated', function( response ){
+      THIS.setState( { poll: response } );
+    });
   }
 
   render() {
-    const { poll, nickname, hideJoinPoll, pollOptions, joinInError, joinErrorMessage, hideAddPollOption } = this.state;
+    const { poll, nickname, hideJoinPoll, pollOptions, joinInError, joinErrorMessage, hideAddPollOption, optionValue } = this.state;
 
     if( !poll ) {
       return null;
@@ -63,9 +76,18 @@ export default class Poll extends React.Component {
         <AddPollOption
           hideAddPollOption = { hideAddPollOption }
           handleCloserClick = { this.handleCloserClick }
-          handleStepCompletion = { this.submitAddPollOption }
+          handleStepCompletion = { this.state.submitPollOption }
           inError = { joinInError }
           errorMessage = { joinErrorMessage }
+          value = { optionValue }
+        />
+        <EditQuestion
+          hideEditQuestion = { this.state.hideEditQuestion }
+          handleCloserClick = { this.handleCloserClick }
+          handleStepCompletion = { this.submitEditedQuestion }
+          inError = { joinInError }
+          errorMessage = { joinErrorMessage }
+          value = { poll.pollquestion }
         />
         <div className="zippypoll__form-holder">
           <ZippyPollForm
@@ -78,6 +100,7 @@ export default class Poll extends React.Component {
             pollOptions = { pollOptions }
             showJoinPoll = { this.showJoinPoll }
             optionClicked = { this.optionClicked }
+           showEditQuestion = { this.showEditQuestion }
           />
         </div>
       </div>
@@ -92,7 +115,6 @@ export default class Poll extends React.Component {
       }
     }).then( (response) => {
       this.setState( { poll: response.data.poll, nickname: this.getNickname(response.data.poll.urlhash) }, ()=> this.getPollOptions() );
-
     });
   }
 
@@ -120,6 +142,34 @@ export default class Poll extends React.Component {
     }).then( (response) => {
       if(response.data.status === "success") {
         this.setState( { hideAddPollOption: true } );
+      } else if( response.data.status === "error" ) {
+        this.setState( { joinInError: true, joinErrorMessage: response.data.message })
+      }
+    });
+  }
+
+  submitEditPollOption = ( fieldName, fieldValue ) => {
+    axios.post('/api/editoption', { pollid: this.state.poll.pollid, option: fieldValue, optionid: this.state.optionID }, {
+      headers: {
+          'Content-Type': 'application/json'
+      }
+    }).then( (response) => {
+      if(response.data.status === "success") {
+        this.setState( { hideAddPollOption: true } );
+      } else if( response.data.status === "error" ) {
+        this.setState( { joinInError: true, joinErrorMessage: response.data.message })
+      }
+    });
+  }
+
+  submitEditedQuestion = ( fieldName, fieldValue ) => {
+    axios.post('/api/editQuestion', { pollid: this.state.poll.pollid, pollquestion: fieldValue, urlhash: this.props.match.params.id }, {
+      headers: {
+          'Content-Type': 'application/json'
+      }
+    }).then( (response) => {
+      if(response.data.status === "success") {
+        this.setState( { hideEditQuestion: true } );
       } else if( response.data.status === "error" ) {
         this.setState( { joinInError: true, joinErrorMessage: response.data.message })
       }
@@ -162,7 +212,7 @@ export default class Poll extends React.Component {
   handleCloserClick = ( event, doItAnyway )=> {
     event.preventDefault();
      if(event.target === event.currentTarget || doItAnyway) {
-       this.setState( { hideJoinPoll: true, hideAddPollOption: true } );
+       this.setState( { hideJoinPoll: true, hideAddPollOption: true, hideEditQuestion: true } );
      }
   }
 
@@ -170,11 +220,25 @@ export default class Poll extends React.Component {
     this.setState( { hideJoinPoll: false } );
   }
 
-  showAddPollOption = () => {
-    this.setState( { hideAddPollOption: false } );
+  showAddPollOption = ( event, option ) => {
+    let optionID = null, optionValue = '', submitPollOption = this.submitAddPollOption;
+    if( option ) {
+       optionID = option.id;
+       optionValue = option.option;
+       submitPollOption = this.submitEditPollOption;
+    }
+    this.setState( { submitPollOption, optionID, optionValue, hideAddPollOption: false } );
+  }
+
+  showEditQuestion = () => {
+    this.setState( { hideEditQuestion: false } );
   }
 
   getNickname = (urlHash) => {
-    return cookies.getCookie(`zippypoll_${ urlHash }` );
+    const cookiedPoll = cookies.getCookie(`zippypoll_${ urlHash }` );
+    if( cookiedPoll ) {
+      return cookies.getCookie(`zippypoll_${ urlHash }` ).split(',')[0];
+    }
+    return null;
   }
 }
