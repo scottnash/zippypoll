@@ -15,9 +15,10 @@ const renderOptions = ( options, nickname, optionClicked, showAddPollOption ) =>
     const nicknames = option.nicknames ? option.nicknames.split(',') : [];
     const addOrSubtract = nicknames.indexOf(nickname);
     const addOrSubtractClass = addOrSubtract ? 'zippypoll__add-option' : 'zippypoll__subtract-option';
+    const hideVotingClass = nickname ? '' : 'zippypoll__hide-voting';
     return (
       <li key={ option.id } onClick = { ()=> { optionClicked( option.id, addOrSubtract ) } }>
-        <div className={ `zippypoll__option ${ addOrSubtractClass }` }>{ option.option }{ renderEdit( option, nickname, showAddPollOption ) }</div>
+        <div className={ `zippypoll__option ${ addOrSubtractClass } ${ hideVotingClass }` }>{ option.option }{ renderEdit( option, nickname, showAddPollOption ) }</div>
         <div className="zippypoll__votes">{ renderNicknames( nicknames ) }</div>
       </li>
     )

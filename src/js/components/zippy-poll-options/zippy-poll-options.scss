@@ -47,6 +47,10 @@
     cursor: pointer;
     padding-left: 32px;
     position: relative;
+    &.zippypoll__hide-voting {
+      cursor: auto;
+      padding-left: 0;
+    }
     &:before {
       @include coloredButton;
       border-radius: 50%;
@@ -63,6 +67,9 @@
     }
     &.zippypoll__add-option:before {
       content: '+';
+    }
+    &.zippypoll__hide-voting:before {
+      display: none;
     }
     &:hover {
       &:before {
