@@ -16,6 +16,7 @@ io.on('connection', function(socket){
 
 app.use('/assets/scripts', express.static('./src/dist/scripts'));
 app.use('/assets/css', express.static('./src/dist/css'));
+app.use('/assets/images', express.static('./src/dist/images'));
 
 
 const loadHomePage = (req,res)=> {
