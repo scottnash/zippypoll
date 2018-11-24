@@ -11,10 +11,23 @@
 }
 
 .zippypoll__modal-holder {
-  left: 50%;
+  height: 100%;
+  max-width: 100%;
   position: absolute;
-  top: 50%;
-  transform: translate( -50%, -50% );
+  width: 100%;
+  .zippypoll__entry-block {
+    height: calc(100% - 40px);
+  }
+  @include breakpoint(md) {
+    height: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate( -50%, -50% );
+    width: 775px;
+    .zippypoll__entry-block {
+      height: auto;
+    }
+  }
 }
 
 .zippypoll__modal-closer {

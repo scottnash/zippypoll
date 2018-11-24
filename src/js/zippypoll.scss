@@ -83,6 +83,10 @@ input[type='text'] {
   display: block;
 }
 
+.zippypoll__input-button-holder {
+  position: relative;
+}
+
 .zippypoll__entry-block {
   background: $white;
   display: block;
@@ -125,7 +129,7 @@ input[type='text'] {
     margin: 0;
     position: absolute;
     right: 2.95px;
-    top: 34.5px;
+    top: 1px;
   }
 }
 
@@ -163,5 +167,16 @@ h2 {
   font-size: 1.25rem;
   @include breakpoint(md) {
     font-size: 1.5rem;
+  }
+}
+
+article {
+  line-height: 1.5rem;
+  padding: 20px;
+  ul {
+    padding-left: 15px;
+    li {
+      margin-bottom: 20px;
+    }
   }
 }

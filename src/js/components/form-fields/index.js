@@ -41,30 +41,32 @@ export class InputText extends Component {
      return (
        <div className = { `zippypoll__field ${ this.state.inError || this.props.inError ? 'zippypoll__field-inerror': ''}` }>
          <label>{ this.props.label }</label>
-           <input
-            name={ this.props.name }
-             onBlur = { el => this.validateFieldValue( el.target.value ) }
-             onFocus = { ()=> { this.setState( { touched: true } ) } }
-             onChange={ this.handleChange }
-             className = { ((this.props.touched || this.props.submitting) && this.props.error) ? 'zippypoll__field-inerror': '' }
-             autoFocus = { this.props.activeFormStep === this.props.index }
-             value = { this.state.inputValue }
-             placeholder={ this.props.placeholder }
-             type={ this.props.type }
-             onKeyUp = {
-               (e)=> {
-                 if (e.keyCode === 13) {
-                   e.preventDefault();
-                   this.handleSubmit( e );
+         <div className="zippypoll__input-button-holder">
+             <input
+              name={ this.props.name }
+               onBlur = { el => this.validateFieldValue( el.target.value ) }
+               onFocus = { ()=> { this.setState( { touched: true } ) } }
+               onChange={ this.handleChange }
+               className = { ((this.props.touched || this.props.submitting) && this.props.error) ? 'zippypoll__field-inerror': '' }
+               autoFocus = { this.props.activeFormStep === this.props.index }
+               value = { this.state.inputValue }
+               placeholder={ this.props.placeholder }
+               type={ this.props.type }
+               onKeyUp = {
+                 (e)=> {
+                   if (e.keyCode === 13) {
+                     e.preventDefault();
+                     this.handleSubmit( e );
+                   }
                  }
                }
-             }
-           />
-           <button
-              className="colored-button"
-              type="button"
-              onClick= { this.handleSubmit }
-           >{ this.props.buttonLabel }</button>
+             />
+             <button
+                className="colored-button"
+                type="button"
+                onClick= { this.handleSubmit }
+             >{ this.props.buttonLabel }</button>
+           </div>
            <div className="zippypoll__error-message">{ this.state.inError || this.props.inError ? <span>{ this.state.errorMessage || this.props.errorMessage }</span> : '' }</div>
        </div>
      );

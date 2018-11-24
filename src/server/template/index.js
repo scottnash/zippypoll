@@ -3,6 +3,9 @@ const htmlTemplate = ( pageTitle, reactDom ) => {
         <!DOCTYPE html>
         <html>
         <head>
+          <meta property="og:title" content="Zippypoll" />
+          <meta property="og:description" content="Zippypoll is designed to be a quick and fun way to create an informal poll—on any subject—that can be shared with anyone." />
+          <meta property="og:image" content="https://www.zippypoll.com/assets/images/zippypoll-logo.png" />
           <!-- Global site tag (gtag.js) - Google Analytics -->
           <script async src="https://www.googletagmanager.com/gtag/js?id=UA-297005-4"></script>
           <script>
