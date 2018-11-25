@@ -1,3 +1,6 @@
+# Zippy poll
+[Live version](https://www.zippypoll.com)
+
 # todo
 
 1. finish styling
