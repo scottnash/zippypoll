@@ -17,10 +17,12 @@
     min-height: 150px;
   }
   li {
+    border-bottom: 1px solid $borderColor;
     line-height: 30px;
     margin: 20px 0 0 0;
     min-height: 52px;
     overflow: auto;
+    padding-bottom: 15px;
     position: relative;
     text-align: left;
     @include breakpoint(md) {

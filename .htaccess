@@ -1,3 +1,7 @@
 RewriteEngine On
-RewriteCond %{SERVER_PORT} 8
+RewriteCond %{HTTPS} =on
 RewriteRule .?  http://www.zippypoll.com:8081%{REQUEST_URI} [P,L]
+RewriteCond %{SERVER_PORT} 80 
+RewriteRule ^(.*)$ https://www.zippypoll.com/$1 [R,L]
+
+

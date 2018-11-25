@@ -24,10 +24,20 @@ footer {
   height: 42px;
   position: relative;
   label {
+    cursor: pointer;
     display: inline-block;
     height: 42px;
     line-height: 42px;
     margin: 0;
+    padding-right: 25px;
+    position: relative;
+    &:after {
+      content: '\25b2';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
   ul {
     background-color: white;
@@ -37,8 +47,14 @@ footer {
     margin: 0;
     padding: 10px;
     position: absolute;
+    li {
+      padding-top: 15px;
+    }
   }
   &.open {
+    label:after {
+      content: '\25bc';
+    }
     ul {
       border: 1px solid $borderColor;
       border-bottom: 0;
@@ -46,10 +62,9 @@ footer {
       left: -25px;
       width: calc(100vw);
       @include breakpoint(md) {
-        border: 0;
-        box-shadow: $boxshadow;
         left: 0;
-        width: 50vw;
+        max-width: 1280px;
+        width: 100vw;
       }
     }
   }
