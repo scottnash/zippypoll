@@ -14,7 +14,7 @@ const renderOptions = ( options, nickname, optionClicked, showAddPollOption ) =>
   return options.map( ( option, index ) => {
     const nicknames = option.nicknames ? option.nicknames.split(',') : [];
     const addOrSubtract = nicknames.indexOf(nickname);
-    const addOrSubtractClass = addOrSubtract ? 'zippypoll__add-option' : 'zippypoll__subtract-option';
+    const addOrSubtractClass = addOrSubtract < 0 ? 'zippypoll__add-option' : 'zippypoll__subtract-option';
     const hideVotingClass = nickname ? '' : 'zippypoll__hide-voting';
     return (
       <li key={ option.id } onClick = { ()=> { optionClicked( option.id, addOrSubtract ) } }>

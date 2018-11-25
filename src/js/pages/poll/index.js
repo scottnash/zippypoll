@@ -140,6 +140,7 @@ class Poll extends React.Component {
       if(response.data.status === "success") {
         this.setState ( { nickname: fieldValue, hideJoinPoll: true }, ()=> {
           cookies.setCookie( `zippypoll_${ this.state.poll.urlhash }`, JSON.stringify( { nickname: fieldValue.substring(0,10), pollquestion: this.state.poll.pollquestion } ) );
+          this.props.updateFooterPolls();
         })
       } else if( response.data.status === "error" ) {
         this.setState( { joinInError: true, joinErrorMessage: response.data.message })

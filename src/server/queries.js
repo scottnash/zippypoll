@@ -155,7 +155,7 @@ const adjustOptionVote = ( req, res, next, io ) => {
 }
 
 const getOptions = ( req, res, next ) => {
-  db.any( "SELECT polloptions.id, polloptions.option, string_agg( pollsters.nickname, ', ') as nicknames, COUNT(pollsters.nickname), ( SELECT nickname from pollsters where id = polloptions.creatorid ) as optionCreator FROM polloptions LEFT OUTER JOIN polloptionvotes on polloptions.id = polloptionvotes.optionid LEFT OUTER JOIN  pollsters on pollsters.id = polloptionvotes.pollsterid WHERE polloptions.pollid = ${ pollid } GROUP BY 1, 2 ORDER BY COUNT(pollsters.nickname) desc, polloptions.id", req.body).then( (response)=> {
+  db.any( "SELECT polloptions.id, polloptions.option, string_agg( pollsters.nickname, ',') as nicknames, COUNT(pollsters.nickname), ( SELECT nickname from pollsters where id = polloptions.creatorid ) as optionCreator FROM polloptions LEFT OUTER JOIN polloptionvotes on polloptions.id = polloptionvotes.optionid LEFT OUTER JOIN  pollsters on pollsters.id = polloptionvotes.pollsterid WHERE polloptions.pollid = ${ pollid } GROUP BY 1, 2 ORDER BY COUNT(pollsters.nickname) desc, polloptions.id", req.body).then( (response)=> {
     res.status(200)
       .json({
         options: response,
@@ -166,7 +166,7 @@ const getOptions = ( req, res, next ) => {
 }
 
 const emitOptions = ( req, res, next, io ) => {
-  db.any( "SELECT polloptions.id, polloptions.option, string_agg( pollsters.nickname, ', ') as nicknames, COUNT(pollsters.nickname), ( SELECT nickname from pollsters where id = polloptions.creatorid ) as optionCreator FROM polloptions LEFT OUTER JOIN polloptionvotes on polloptions.id = polloptionvotes.optionid LEFT OUTER JOIN  pollsters on pollsters.id = polloptionvotes.pollsterid WHERE polloptions.pollid = ${ pollid } GROUP BY 1, 2 ORDER BY COUNT(pollsters.nickname) desc, polloptions.id", req.body).then( (response)=> {
+  db.any( "SELECT polloptions.id, polloptions.option, string_agg( pollsters.nickname, ',') as nicknames, COUNT(pollsters.nickname), ( SELECT nickname from pollsters where id = polloptions.creatorid ) as optionCreator FROM polloptions LEFT OUTER JOIN polloptionvotes on polloptions.id = polloptionvotes.optionid LEFT OUTER JOIN  pollsters on pollsters.id = polloptionvotes.pollsterid WHERE polloptions.pollid = ${ pollid } GROUP BY 1, 2 ORDER BY COUNT(pollsters.nickname) desc, polloptions.id", req.body).then( (response)=> {
     io.emit('options updated', response );
   });
 }
