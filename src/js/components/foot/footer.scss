@@ -66,8 +66,17 @@ footer {
   height: 42px;
   overflow: visible;
   .colored-button {
+    display: none;
     float: right;
     height: 20px;
     margin: 0;
+  }
+}
+
+body[data-page="poll"], body[data-page="about"]{
+  footer {
+    .create-poll-button {
+      display: block;
+    }
   }
 }

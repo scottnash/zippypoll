@@ -13,6 +13,10 @@ const setCookie = (cookieName, cookieValue, expires) => {
   document.cookie = `${ cookieName } = ${ cookieValue };  path=/; ${ expiresString }`;
 }
 
+const deleteCookie = ( cookieName) => {
+  document.cookie = cookieName + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+
 const getAllPollCookies = ()=> {
   if (process.env.BROWSER) {
     let cookies = document.cookie.split(';');
@@ -38,4 +42,4 @@ const getAllPollCookies = ()=> {
   return [];
 }
 
-export { getCookie, setCookie, getAllPollCookies };
+export { getCookie, setCookie, getAllPollCookies, deleteCookie };

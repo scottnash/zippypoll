@@ -1,5 +1,6 @@
 import React from "react";
 import axios from 'axios';
+import { withRouter } from 'react-router-dom'
 import ZippyPollForm from '../../components/zippypoll-form';
 import JoinPoll from '../../components/joinpoll';
 import AddPollOption from '../../components/add-edit-poll-option';
@@ -12,7 +13,7 @@ if (process.env.BROWSER) {
 }
 
 
-export default class Poll extends React.Component {
+class Poll extends React.Component {
   constructor(props){
     super(props);
 
@@ -33,6 +34,12 @@ export default class Poll extends React.Component {
     }
 
     this.getPoll();
+  }
+
+  componentWillMount = () => {
+    if (process.env.BROWSER) {
+      document.querySelector('body').setAttribute('data-page', 'poll');
+    }
   }
 
   componentWillUnmount() {
@@ -114,7 +121,13 @@ export default class Poll extends React.Component {
           'Content-Type': 'application/json'
       }
     }).then( (response) => {
-      this.setState( { poll: response.data.poll, nickname: this.getNickname(response.data.poll.urlhash) }, ()=> this.getPollOptions() );
+      if ( response.data.status === 'success' ) {
+        this.setState( { poll: response.data.poll, nickname: this.getNickname(response.data.poll.urlhash) }, ()=> this.getPollOptions() );
+      } else {
+        cookies.deleteCookie( `zippypoll_${ this.props.match.params.id }` );
+        this.props.setErrorMessage( response.data.message )
+        this.props.history.push(`/`);
+      }
     });
   }
 
@@ -126,7 +139,7 @@ export default class Poll extends React.Component {
     }).then( (response) => {
       if(response.data.status === "success") {
         this.setState ( { nickname: fieldValue, hideJoinPoll: true }, ()=> {
-          cookies.setCookie( `zippypoll_${ this.state.poll.urlhash }`, JSON.stringify( { nickname: fieldValue, pollquestion: this.state.poll.pollquestion } ) );
+          cookies.setCookie( `zippypoll_${ this.state.poll.urlhash }`, JSON.stringify( { nickname: fieldValue.substring(0,10), pollquestion: this.state.poll.pollquestion } ) );
         })
       } else if( response.data.status === "error" ) {
         this.setState( { joinInError: true, joinErrorMessage: response.data.message })
@@ -244,3 +257,5 @@ export default class Poll extends React.Component {
     return null;
   }
 }
+
+export default withRouter( Poll );

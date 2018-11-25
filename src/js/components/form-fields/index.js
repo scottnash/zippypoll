@@ -44,6 +44,7 @@ export class InputText extends Component {
          <div className="zippypoll__input-button-holder">
              <input
               name={ this.props.name }
+              maxLength={ this.props.maxLength || 10000 }
                onBlur = { el => this.validateFieldValue( el.target.value ) }
                onFocus = { ()=> { this.setState( { touched: true } ) } }
                onChange={ this.handleChange }

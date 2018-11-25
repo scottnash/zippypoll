@@ -5,6 +5,12 @@ export default class About extends React.Component {
     super(props);
   }
 
+  componentWillMount = () => {
+    if (process.env.BROWSER) {
+      document.querySelector('body').setAttribute('data-page', 'about');
+    }
+  }
+
   componentWillUnmount() {
     this.props.turnOnEntryAnimation();
   }

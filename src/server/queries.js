@@ -9,7 +9,8 @@ const connectionString = 'postgres://zippypolladmin:33Km4V81!@postgres/zippypoll
 const db = pgp(connectionString);
 
 const createPoll = (req, res, next) => {
-  db.any(  'insert into pollsters(nickname) values( ${nickname} ) returning *', req.body).then( (response)=> {
+  req.body.nickname = req.body.nickname.substring(0,10);
+  db.any(  'insert into pollsters(nickname) values( ${ nickname } ) returning *', req.body).then( (response)=> {
       req.body.creatorid = response[0].id;
       const userID = req.body.creatorid;
       db.any(  'insert into polls(creatorid, pollquestion) values( ${ creatorid }, ${ pollquestion } ) returning *', req.body).then( (response)=> {
@@ -32,7 +33,7 @@ const createPoll = (req, res, next) => {
 }
 
 const joinPoll = ( req, res, next ) => {
-    req.body.nickname = req.body.nickname.trim();
+    req.body.nickname = req.body.nickname.trim().substring(0,10);
     db.any( "select * from pollsters LEFT OUTER JOIN polls_pollsters ON pollsters.id = polls_pollsters.pollsterid where polls_pollsters.pollid = ${ pollid } AND pollsters.nickname = ${ nickname }", req.body).then( (response)=> {
       if( response.length === 0 ) {
         db.any(  'insert into pollsters(nickname) values( ${nickname} ) returning *', req.body).then( (response)=> {
@@ -173,6 +174,14 @@ const emitOptions = ( req, res, next, io ) => {
 
 const getPoll = (req, res, next, io, emit) => {
   db.any( "select polls.id as pollid, * from polls LEFT OUTER JOIN pollsters ON creatorid = pollsters.id where urlhash = ${ urlhash }", req.body).then( (response)=> {
+      if( response.length === 0 ) {
+        res.status(200)
+          .json({
+            poll: null,
+            status: 'failed',
+            message: "Sorry, but we couldn't find your poll.  Please doublecheck your url."
+          });
+      } else {
         if( emit ) {
           io.emit('poll updated', response[0] );
         } else {
@@ -183,7 +192,7 @@ const getPoll = (req, res, next, io, emit) => {
               message: 'poll fetched'
             });
         }
-
+      }
     })
     .catch(function (err) {
       return next(err);

@@ -10,6 +10,12 @@ export default class Home extends React.Component {
     super(props);
   }
 
+  componentWillMount = () => {
+    if (process.env.BROWSER) {
+      document.querySelector('body').setAttribute('data-page', 'home');
+    }
+  }
+
   componentWillUnmount() {
     this.props.turnOnEntryAnimation();
   }

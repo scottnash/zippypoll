@@ -43,7 +43,7 @@ export default class Footer extends React.Component {
                 { this.renderParticipatingPolls() }
               </ul>
             </div>
-            <div className="colored-button  button">
+            <div className="colored-button  button create-poll-button">
               <Link to="/">Create a Poll</Link>
             </div>
           </div>

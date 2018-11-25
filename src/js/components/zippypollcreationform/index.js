@@ -36,7 +36,8 @@ class ZippyPollCreationForm extends React.Component {
         activeFormStep = { this.state.activeFormStep }
         buttonLabel = "Create Poll"
         index = { 1 }
-        label = { "Then, enter your initials or a nickname" }
+        maxLength = { 10 }
+        label = { "Then, enter your initials or a nickname (10 characters max)" }
         name="nickname"
         placeholder="Nickname"
         handleStepCompletion = { this.handleStepCompletion }
@@ -93,7 +94,7 @@ class ZippyPollCreationForm extends React.Component {
       }
     }).then( (response) => {
       if(response.data.status === "success") {
-        cookies.setCookie( `zippypoll_${ response.data.urlhash }`, JSON.stringify( { nickname: this.state.zippyPollForm.nickname, pollquestion: this.state.zippyPollForm.pollquestion } ) );
+        cookies.setCookie( `zippypoll_${ response.data.urlhash }`, JSON.stringify( { nickname: this.state.zippyPollForm.nickname.substring(0,10), pollquestion: this.state.zippyPollForm.pollquestion } ) );
         this.props.history.push(`/poll/${ response.data.urlhash }`);
       }
     });
