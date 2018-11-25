@@ -3,8 +3,9 @@ const htmlTemplate = ( pageTitle, reactDom ) => {
         <!DOCTYPE html>
         <html>
         <head>
+          <meta property="description" content="Zippypoll is a quick and fun way to create a poll that can be shared with anyone." />
           <meta property="og:title" content="Zippypoll" />
-          <meta property="og:description" content="Zippypoll is designed to be a quick and fun way to create an informal poll on any subject that can be shared with anyone." />
+          <meta property="og:description" content="Zippypoll is a quick and fun way to create a poll that can be shared with anyone." />
           <meta property="og:image" content="https://www.zippypoll.com/assets/images/zippypoll-logo.png" />
           <!-- Global site tag (gtag.js) - Google Analytics -->
           <script async src="https://www.googletagmanager.com/gtag/js?id=UA-297005-4"></script>
@@ -19,6 +20,8 @@ const htmlTemplate = ( pageTitle, reactDom ) => {
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <title>${ pageTitle }</title>
             <link rel="stylesheet" href="/assets/css/zippypoll.css"/>
+            <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+            <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
         </head>
 
         <body>
