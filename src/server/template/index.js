@@ -3,7 +3,7 @@ const htmlTemplate = ( pageTitle, reactDom ) => {
         <!DOCTYPE html>
         <html>
         <head>
-          <meta property="description" content="Zippypoll is a quick and fun way to create a poll that can be shared with anyone." />
+          <meta name="description" content="Zippypoll is a quick and fun way to create a poll that can be shared with anyone." />
           <meta property="og:title" content="Zippypoll" />
           <meta property="og:description" content="Zippypoll is a quick and fun way to create a poll that can be shared with anyone." />
           <meta property="og:image" content="https://www.zippypoll.com/assets/images/zippypoll-logo.png" />
