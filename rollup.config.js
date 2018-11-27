@@ -17,12 +17,12 @@ export default {
     'react-router-dom'
   ],
   plugins: [
-    resolve(extensions: ['*', '.scss', '.css', '.js', '.jsx', '.json']),
     babel({
       exclude: 'node_modules/**',
       babelrc: false,
       presets: [['env', { modules: false }], 'react']
     }),
+    resolve({ extensions: ['.scss', '.css', '.js', '.jsx', '.json' ] }),
     sass()
   ]
 };
