@@ -11,8 +11,11 @@ export default class Home extends React.Component {
   }
 
   componentWillMount = () => {
-    if (process.env.BROWSER) {
+    try{
       document.querySelector('body').setAttribute('data-page', 'home');
+    }
+    catch( error ) {
+
     }
   }
 

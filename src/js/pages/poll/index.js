@@ -39,8 +39,11 @@ class Poll extends React.Component {
   }
 
   componentWillMount = () => {
-    if (process.env.BROWSER) {
+    try{
       document.querySelector('body').setAttribute('data-page', 'poll');
+    }
+    catch( error ) {
+
     }
   }
 
