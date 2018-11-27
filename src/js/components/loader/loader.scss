@@ -1,0 +1,37 @@
+@import '../../sass/config';
+
+.loader-holder {
+  height: 120px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate( -50%, -50%);
+  width: 120px;
+  span {
+    bottom: 0;
+    color: $logoRed;
+    display: block;
+    font-weight: bolc;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+  }
+}
+
+.loader {
+    animation: spin 1s linear infinite;
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid $logoRed;
+    border-radius: 50%;
+    height: 60px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    width: 60px;
+}
+
+@keyframes spin {
+    0% { transform: translate( -50%, -50%) rotate(0deg); }
+    100% { transform: translate( -50%, -50%) rotate(360deg); }
+}

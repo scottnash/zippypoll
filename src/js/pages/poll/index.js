@@ -3,6 +3,7 @@ import axios from 'axios';
 import { withRouter } from 'react-router-dom'
 import ZippyPollForm from '../../components/zippypoll-form';
 import JoinPoll from '../../components/joinpoll';
+import Loader from '../../components/loader';
 import AddPollOption from '../../components/add-edit-poll-option';
 import EditQuestion from '../../components/edit-question';
 import * as cookies from '../../helpers/cookies.js';
@@ -30,7 +31,8 @@ class Poll extends React.Component {
       optionValue: null,
       optionID: null,
       submitPollOption: this.submitAddPollOption,
-      hideEditQuestion: true
+      hideEditQuestion: true,
+      showLoader: true
     }
 
     this.getPoll();
@@ -65,8 +67,8 @@ class Poll extends React.Component {
   render() {
     const { poll, nickname, hideJoinPoll, pollOptions, joinInError, joinErrorMessage, hideAddPollOption, optionValue } = this.state;
 
-    if( !poll ) {
-      return null;
+    if( this.state.showLoader ) {
+      return <Loader />;
     }
 
     return (
@@ -197,7 +199,7 @@ class Poll extends React.Component {
       }
     }).then( (response) => {
       if(response.data.status === "success") {
-        this.setState( { pollOptions: response.data.options } );
+        this.setState( { pollOptions: response.data.options, showLoader: false } );
       } else if( response.data.status === "error" ) {
         this.setState( { joinInError: true, joinErrorMessage: response.data.message })
       }

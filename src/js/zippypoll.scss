@@ -43,7 +43,7 @@ header {
   padding: 25px 0 125px;
   @include breakpoint(md){
     max-width: $maxContentWidth;
-    padding: 75px 25px;
+    padding: 75px 25px 125px;
   }
 }
 

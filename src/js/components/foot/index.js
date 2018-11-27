@@ -34,10 +34,10 @@ export default class Footer extends React.Component {
 
   render() {
     return (
-      <footer className="layout__footer-holder">
+      <footer className={ `layout__footer-holder ${ this.state.myPollsOpen ? 'open': '' }` }>
         <div className="layout__inner-footer">
           <div className="layout__footer-actions">
-            <div className={ `zippypoll__participating-polls ${ this.state.myPollsOpen ? 'open': '' }` }>
+            <div className="zippypoll__participating-polls">
               <label onClick = { this.openMyPolls }>My Polls</label>
               <ul>
                 { this.renderParticipatingPolls() }
