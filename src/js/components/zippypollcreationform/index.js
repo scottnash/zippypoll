@@ -24,9 +24,9 @@ class ZippyPollCreationForm extends React.Component {
         activeFormStep = { this.state.activeFormStep }
         buttonLabel = "Go"
         index = { 0 }
-        label = "First, enter your qestion"
+        label = "First, enter the poll topic"
         name="pollquestion"
-        placeholder = "Poll question"
+        placeholder = "Poll Topic"
         handleStepCompletion = { this.handleStepCompletion }
         type="text"
         validate = { formFieldValidators.requiredValidator }

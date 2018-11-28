@@ -6,3 +6,20 @@
       padding-top: 25px;
     }
 }
+
+.zippypoll__sample-poll {
+  margin: 25px auto 25px;
+  text-align: center;
+  @include breakpoint(md) {
+      margin: 75px auto 50px;
+  }
+  h4 {
+    margin: 0;
+  }
+  img {
+    max-width: 75%;
+    @include breakpoint(md) {
+      max-width: 50%;
+    }
+  }
+}

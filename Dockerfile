@@ -15,7 +15,7 @@ COPY . /app
 EXPOSE 8081
 
 # On the server, it should run this command
-# CMD ["npm", "run", "prod"]
+CMD ["npm", "run", "prod"]
 
 # On dev, this command
-CMD ["npm", "run", "dev"]
+# CMD ["npm", "run", "dev"]
