@@ -58,7 +58,7 @@ class Poll extends React.Component {
 
   componentDidMount() {
     const THIS = this;
-    this.socket = io();
+    this.socket = io('http://' + window.location.hostname + ':8081');
     this.socket.on('options updated', function( response ){
       THIS.setState( { pollOptions: response } );
     });
